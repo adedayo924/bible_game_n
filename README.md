@@ -26,7 +26,7 @@ lib/
 1.  Clone the repository:
 
     ```bash
-    git clone <your_repository_url>
+    git clone github.com:adedayo924/bible_game_n.git
     ```
 
 2.  Navigate to the project directory:
@@ -60,8 +60,8 @@ This command will launch the app on your connected device or emulator.
 
 Contributions are welcome! Please feel free to submit pull requests or open issues to suggest improvements or report bugs.
 
-## License
-
-[Choose a license](https://choosealicense.com/)
+## Authors
+-   [Kolade F. Opeyemi]
+-  [Ifeoluwa Esther Oyelowo]
 
 ```
