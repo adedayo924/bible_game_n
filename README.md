@@ -62,5 +62,5 @@ Contributions are welcome! Please feel free to submit pull requests or open issu
 
 ## Authors
 -   [Kolade F. Opeyemi](https:github.com/adedayo924)
--  [Ifeoluwa Esther Oyelowo]
+-  Ifeoluwa Esther Oyelowo
 
