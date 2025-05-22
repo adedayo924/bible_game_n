@@ -61,6 +61,6 @@ This command will launch the app on your connected device or emulator.
 Contributions are welcome! Please feel free to submit pull requests or open issues to suggest improvements or report bugs.
 
 ## Authors
--   [Kolade F. Opeyemi](https:github.com/adedayo924)
+-   [Kolade F. Opeyemi](https://github.com/adedayo924)
 -  Ifeoluwa Esther Oyelowo
 
