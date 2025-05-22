@@ -1,0 +1,772 @@
+[
+    {
+      "level": "Basic",
+      "question": "Who was the first man created by God?",
+      "options": ["Cain", "Abel", "Adam", "Seth"],
+      "correctAnswer": 2,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "What did God create on the first day?",
+      "options": ["Land and Sea", "Sun, Moon, and Stars", "Light", "Animals"],
+      "correctAnswer": 2,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "What did God created on the 7th day?",
+      "options": ["man", "light", "Animals", "Rested"],
+      "correctAnswer": 3,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "What is the name of the prophet that anointed David?",
+      "options": ["Elijah", "Samuel", "Elisah", "Nathan"],
+      "correctAnswer": 1,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "Who preached the first gospel message?",
+      "options": ["Peter", "John", "James", "Paul"],
+      "correctAnswer": 0,
+      "topic": "Acts"
+    },
+    {
+      "level": "Basic",
+      "question": "Who led the children of israel through the red sea?",
+      "options":["Joshua", "Abraham", "Moses", "Noah"],
+      "correctAnswer": 2,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "Who got saved on the way to Damascus?",
+      "options": ["Paul", "Ananias", "Judas", "Dorcas"],
+      "correctAnswer": 0,
+      "topic": "Acts"
+    },
+    {
+      "level": "Basic",
+      "question": "which prophet prophesied the birth of JESUS?",
+      "options": ["Elisha", "Elijah", "Isaiah", "Joel"],
+      "correctAnswer": 2,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Intermediate",
+      "question": "How many souls did Peter won the day of Pentecost?",
+      "options": ["2000", "3000", "120", "100"],
+      "correctAnswer": 1,
+      "topic": "Acts"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What name did GOD introduced HIMSELF to Moses?",
+      "options": ["I AM THAT I AM", "EBENEZER", "JEHOVAH JIREH"],
+      "correctAnswer": 0,
+      "topic": "Moses"
+    },
+    {
+      "level": "Intermediate",
+      "question": "who betrayed JESUS with a kiss?",
+      "options": ["James", "Judas Iscariot", "Thomas", "John"],
+      "correctAnswer": 1,
+      "topic": "Mark"
+    },  
+    {
+      "level": "Intermediate",
+      "question": "How many sons did Jacob have?",
+      "options": ["10", "12", "14", "16"],
+      "correctAnswer": 1,
+      "topic": "Abraham"
+    },
+    {
+      "level": "Intermediate",
+      "question": "JESUS performed the first miracle where?",
+      "options": ["Jordan", "Jericho", "Bethlehem", "Cana of Galilee"],
+      "correctAnswer": 3,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Intermediate",
+      "question": "JESUS fed 5000 people with ___?",
+      "options": ["5 loaves of bread and 5 fishes", "2 loaves of bread and 4 fishes", "2500 loaves of bread and 2500 fishes", " 5 loaves of bread and 2 fishes"],
+      "correctAnswer": 3,
+      "topic": "Mark"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What is the name of the Apostle who replaced Judas Iscariot?",
+      "options": ["Matthias", "Joseph", "Cephas", "Paul"],
+      "correctAnswer": 0,
+      "topic": "Acts"
+    },
+    {
+      "level": "Basic",
+      "question": "In which garden did Adam and Eve live?",
+      "options": ["Garden of Eden", "Garden of Gethsemane", "Hanging Gardens of Babylon", "Garden of Roses"],
+      "correctAnswer": 0,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "Who were the parents of Cain and Abel?",
+      "options": ["Abraham and Sarah", "Isaac and Rebekah", "Adam and Eve", "Jacob and Leah"],
+      "correctAnswer": 2,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "What type of tree was forbidden in the Garden of Eden?",
+      "options": ["Tree of Life", "Tree of Knowledge of Good and Evil", "Fig Tree", "Apple Tree"],
+      "correctAnswer": 1,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "What was the sign of God's covenant with Noah after the flood?",
+      "options": ["Dove", "Rainbow", "Ark", "Olive Branch"],
+      "correctAnswer": 1,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "How many pairs of clean animals did Noah take into the ark?",
+      "options": ["One pair", "Two pairs", "Seven pairs", "Ten pairs"],
+      "correctAnswer": 2,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "Who was the wife of Abraham?",
+      "options": ["Rebekah", "Leah", "Sarah", "Rachel"],
+      "correctAnswer": 2,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "What was the name of Abraham's son of promise?",
+      "options": ["Ishmael", "Isaac", "Jacob", "Esau"],
+      "correctAnswer": 1,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "What city was destroyed by fire and brimstone due to its wickedness?",
+      "options": ["Jericho", "Babylon", "Sodom", "Gomorrah"],
+      "correctAnswer": 2,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "Who wrestled with God and had his name changed to Israel?",
+      "options": ["Isaac", "Jacob", "Joseph", "Judah"],
+      "correctAnswer": 1,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Basic",
+      "question": "How many plagues did God send upon Egypt?",
+      "options": ["7", "10", "12", "5"],
+      "correctAnswer": 1,
+      "topic": "Exodus"
+    },
+    {
+      "level": "Basic",
+      "question": "What was the final plague that convinced Pharaoh to release the Israelites?",
+      "options": ["Locusts", "Darkness", "Death of the Firstborn", "Boils"],
+      "correctAnswer": 2,
+      "topic": "Exodus"
+    },
+    {
+      "level": "Basic",
+      "question": "On what mountain did Moses receive the Ten Commandments?",
+      "options": ["Mount Sinai", "Mount Ararat", "Mount Carmel", "Mount Zion"],
+      "correctAnswer": 0,
+      "topic": "Exodus"
+    },
+    {
+      "level": "Basic",
+      "question": "What food did God provide for the Israelites in the wilderness?",
+      "options": ["Quail and Fish", "Bread and Meat", "Manna and Quail", "Fruit and Nuts"],
+      "correctAnswer": 2,
+      "topic": "Exodus"
+    },
+    {
+      "level": "Basic",
+      "question": "Who was Moses' brother who helped him speak to Pharaoh?",
+      "options": ["Aaron", "Joshua", "Caleb", "Gershon"],
+      "correctAnswer": 0,
+      "topic": "Exodus"
+    },
+    {
+      "level": "Basic",
+      "question": "Who succeeded Moses as leader of the Israelites?",
+      "options": ["Aaron", "Caleb", "Joshua", "Samuel"],
+      "correctAnswer": 2,
+      "topic": "Joshua"
+    },
+    {
+      "level": "Basic",
+      "question": "Which city's walls fell down when the Israelites marched around it?",
+      "options": ["Jerusalem", "Jericho", "Ai", "Gibeon"],
+      "correctAnswer": 1,
+      "topic": "Joshua"
+    },
+    {
+      "level": "Basic",
+      "question": "Who was the judge known for his great strength?",
+      "options": ["Gideon", "Samson", "Deborah", "Jephthah"],
+      "correctAnswer": 1,
+      "topic": "Judges"
+    },
+    {
+      "level": "Basic",
+      "question": "Who was the mother of Samuel?",
+      "options": ["Sarah", "Rebekah", "Hannah", "Leah"],
+      "correctAnswer": 2,
+      "topic": "1 Samuel"
+    },
+    {
+      "level": "Basic",
+      "question": "Who was the first king of Israel?",
+      "options": ["David", "Solomon", "Saul", "Rehoboam"],
+      "correctAnswer": 2,
+      "topic": "1 Samuel"
+    },
+    {
+      "level": "Basic",
+      "question": "Who killed Goliath?",
+      "options": ["Saul", "Jonathan", "David", "Samuel"],
+      "correctAnswer": 2,
+      "topic": "1 Samuel"
+    },
+    {
+      "level": "Basic",
+      "question": "Who was known as 'a man after God's own heart'?",
+      "options": ["Saul", "David", "Solomon", "Abraham"],
+      "correctAnswer": 1,
+      "topic": "1 Samuel"
+    },
+    {
+      "level": "Basic",
+      "question": "Who was the wisest king of Israel?",
+      "options": ["David", "Solomon", "Asa", "Jehoshaphat"],
+      "correctAnswer": 1,
+      "topic": "1 Kings"
+    },
+    {
+      "level": "Basic",
+      "question": "Which prophet confronted Ahab and Jezebel?",
+      "options": ["Elijah", "Elisha", "Isaiah", "Jeremiah"],
+      "correctAnswer": 0,
+      "topic": "1 Kings"
+    },
+    {
+      "level": "Basic",
+      "question": "How many books of Psalms are there?",
+      "options": ["50", "100", "150", "200"],
+      "correctAnswer": 2,
+      "topic": "Psalms"
+    },
+    {
+      "level": "Basic",
+      "question": "Which prophet was thrown into a lion's den?",
+      "options": ["Daniel", "Isaiah", "Jeremiah", "Ezekiel"],
+      "correctAnswer": 0,
+      "topic": "Daniel"
+    },
+    {
+      "level": "Basic",
+      "question": "Who is considered the last prophet of the Old Testament?",
+      "options": ["Malachi", "Zechariah", "Haggai", "Zephaniah"],
+      "correctAnswer": 0,
+      "topic": "Malachi"
+    },
+    {
+      "level": "Basic",
+      "question": "Who announced the birth of Jesus to Mary?",
+      "options": ["John the Baptist", "Gabriel", "Michael", "Peter"],
+      "correctAnswer": 1,
+      "topic": "Luke"
+    },
+    {
+      "level": "Basic",
+      "question": "In what city was Jesus born?",
+      "options": ["Jerusalem", "Nazareth", "Bethlehem", "Capernaum"],
+      "correctAnswer": 2,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Basic",
+      "question": "Who baptized Jesus in the Jordan River?",
+      "options": ["Peter", "John the Baptist", "James", "Andrew"],
+      "correctAnswer": 1,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Basic",
+      "question": "How many disciples did Jesus choose?",
+      "options": ["8", "10", "12", "14"],
+      "correctAnswer": 2,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Basic",
+      "question": "What is the 'Golden Rule'?",
+      "options": ["Love your neighbor", "Do unto others as you would have them do unto you", "Believe in Jesus", "Follow the Ten Commandments"],
+      "correctAnswer": 1,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Basic",
+      "question": "What is the name of the tax collector who followed Jesus?",
+      "options": ["Peter", "John", "Matthew", "Thomas"],
+      "correctAnswer": 2,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Basic",
+      "question": "Which disciple denied Jesus three times?",
+      "options": ["Peter", "Judas", "John", "Thomas"],
+      "correctAnswer": 0,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Basic",
+      "question": "Who was the Roman governor who sentenced Jesus to crucifixion?",
+      "options": ["Herod", "Pilate", "Caesar", "Felix"],
+      "correctAnswer": 1,
+      "topic": "John"
+    },
+    {
+      "level": "Basic",
+      "question": "Who was the first person to see Jesus after his resurrection (according to John's Gospel)?",
+      "options": ["Peter", "Mary Magdalene", "John", "Thomas"],
+      "correctAnswer": 1,
+      "topic": "John"
+    },
+    {
+      "level": "Basic",
+      "question": "What happened on the day of Pentecost?",
+      "options": ["Jesus' Ascension", "The Last Supper", "The Holy Spirit came", "Jesus' Baptism"],
+      "correctAnswer": 2,
+      "topic": "Acts"
+    },
+    {
+      "level": "Basic",
+      "question": "Who was the first Christian martyr?",
+      "options": ["Peter", "Stephen", "Paul", "James"],
+      "correctAnswer": 1,
+      "topic": "Acts"
+    },
+    {
+      "level": "Basic",
+      "question": "Which apostle wrote the most books in the New Testament?",
+      "options": ["Peter", "John", "Paul", "James"],
+      "correctAnswer": 2,
+      "topic": "Pauline Epistles"
+    },
+    {
+      "level": "Basic",
+      "question": "What is the shortest book in the New Testament?",
+      "options": ["Jude", "2 John", "3 John", "Philemon"],
+      "correctAnswer": 2,
+      "topic": "3 John"
+    },
+    {
+      "level": "Basic",
+      "question": "What is the last book of the Bible?",
+      "options": ["Jude", "Revelation", "3 John", "Hebrews"],
+      "correctAnswer": 1,
+      "topic": "Revelation"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of Cain's wife (according to some traditions)?",
+      "options": ["Awan", "Lilith", "Eve", "Adah"],
+      "correctAnswer": 0,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Intermediate",
+      "question": "How old was Noah when the flood began?",
+      "options": ["400 years", "500 years", "600 years", "700 years"],
+      "correctAnswer": 2,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What were the names of Isaac's twin sons?",
+      "options": ["Cain and Abel", "Jacob and Esau", "Ephraim and Manasseh", "Reuben and Simeon"],
+      "correctAnswer": 1,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of Joseph's Egyptian wife?",
+      "options": ["Asenath", "Zuleikha", "Dinah", "Shiphrah"],
+      "correctAnswer": 0,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Which tribe of Israel was designated as priests?",
+      "options": ["Judah", "Levi", "Benjamin", "Ephraim"],
+      "correctAnswer": 1,
+      "topic": "Exodus"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the Ark of the Covenant made of?",
+      "options": ["Gold and Silver", "Acacia Wood and Gold", "Cedar Wood and Bronze", "Olive Wood and Silver"],
+      "correctAnswer": 1,
+      "topic": "Exodus"
+    },
+    {
+      "level": "Intermediate",
+      "question": "How long were the Israelites in the wilderness?",
+      "options": ["20 years", "30 years", "40 years", "50 years"],
+      "correctAnswer": 2,
+      "topic": "Numbers"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who spied out the land of Canaan with Joshua?",
+      "options": ["Aaron", "Caleb", "Gideon", "Barak"],
+      "correctAnswer": 1,
+      "topic": "Numbers"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who was the Moabitess who showed loyalty to her mother-in-law?",
+      "options": ["Esther", "Ruth", "Naomi", "Deborah"],
+      "correctAnswer": 1,
+      "topic": "Ruth"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of David's best friend?",
+      "options": ["Jonathan", "Absalom", "Joab", "Nathan"],
+      "correctAnswer": 0,
+      "topic": "1 Samuel"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who built the first temple in Jerusalem?",
+      "options": ["David", "Solomon", "Hezekiah", "Josiah"],
+      "correctAnswer": 1,
+      "topic": "1 Kings"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who was taken up to heaven in a chariot of fire?",
+      "options": ["Elijah", "Elisha", "Moses", "Enoch"],
+      "correctAnswer": 0,
+      "topic": "2 Kings"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Which book of the Bible is a collection of love poems?",
+      "options": ["Proverbs", "Ecclesiastes", "Song of Solomon", "Lamentations"],
+      "correctAnswer": 2,
+      "topic": "Song of Solomon"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Which prophet spoke of the 'valley of dry bones'?",
+      "options": ["Isaiah", "Jeremiah", "Ezekiel", "Daniel"],
+      "correctAnswer": 2,
+      "topic": "Ezekiel"
+    },
+    {
+      "level": "Intermediate",
+      "question": "How many books are in the Old Testament?",
+      "options": ["37", "39", "41", "46"],
+      "correctAnswer": 1,
+      "topic": "Old Testament"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the angel who appeared to Zechariah?",
+      "options": ["Gabriel", "Michael", "Raphael", "Uriel"],
+      "correctAnswer": 0,
+      "topic": "Luke"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What gift did the wise men NOT bring to Jesus?",
+      "options": ["Gold", "Frankincense", "Myrrh", "Diamonds"],
+      "correctAnswer": 3,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was Jesus' first miracle in Cana of Galilee?",
+      "options": ["Healing a blind man", "Raising Lazarus", "Walking on water", "Turning water into wine"],
+      "correctAnswer": 3,
+      "topic": "John"
+    },
+    {
+      "level": "Intermediate",
+      "question": "In which city was Paul converted on the road to?",
+      "options": ["Jerusalem", "Damascus", "Antioch", "Corinth"],
+      "correctAnswer": 1,
+      "topic": "Acts"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who was Paul's missionary companion on his first journey?",
+      "options": ["Silas", "Timothy", "Barnabas", "Luke"],
+      "correctAnswer": 2,
+      "topic": "Acts"
+    },
+    {
+      "level": "Intermediate",
+      "question": "To which church did Paul write a letter about love in 1 Corinthians 13?",
+      "options": ["Ephesus", "Philippi", "Corinth", "Thessalonica"],
+      "correctAnswer": 2,
+      "topic": "1 Corinthians"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Which fruit of the Spirit is listed first in Galatians 5:22-23?",
+      "options": ["Love", "Joy", "Peace", "Patience"],
+      "correctAnswer": 0,
+      "topic": "Galatians"
+    },
+    {
+      "level": "Intermediate",
+      "question": "How many books are in the New Testament?",
+      "options": ["25", "27", "29", "31"],
+      "correctAnswer": 1,
+      "topic": "New Testament"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who wrote the book of James?",
+      "options": ["James the Great", "James the Less", "James, brother of Jesus", "James, son of Zebedee"],
+      "correctAnswer": 2,
+      "topic": "James"
+    },
+    {
+      "level": "Intermediate",
+      "question": "In Revelation, how many horsemen are mentioned?",
+      "options": ["Two", "Four", "Six", "Eight"],
+      "correctAnswer": 1,
+      "topic": "Revelation"
+    },
+    {
+      "level": "Advanced",
+      "question": "In Genesis, who was the first murderer mentioned in the Bible?",
+      "options": ["Cain", "Lamech", "Esau", "Ham"],
+      "correctAnswer": 0,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is the meaning of 'El Shaddai'?",
+      "options": ["God Almighty", "The Lord is my Shepherd", "The Lord our Righteousness", "The Lord will Provide"],
+      "correctAnswer": 0,
+      "topic": "Theology"
+    },
+    {
+      "level": "Advanced",
+      "question": "According to tradition, who wrote the Pentateuch?",
+      "options": ["Joshua", "Samuel", "Moses", "Ezra"],
+      "correctAnswer": 2,
+      "topic": "Pentateuch"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is the Septuagint?",
+      "options": ["Hebrew Bible", "Greek translation of the Old Testament", "Aramaic Targum", "Latin Vulgate"],
+      "correctAnswer": 1,
+      "topic": "Biblical Studies"
+    },
+    {
+      "level": "Advanced",
+      "question": "Which judge made a foolish vow that resulted in sacrificing his daughter?",
+      "options": ["Gideon", "Jephthah", "Samson", "Barak"],
+      "correctAnswer": 1,
+      "topic": "Judges"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is the 'Day of Atonement' called in Hebrew?",
+      "options": ["Passover", "Yom Kippur", "Rosh Hashanah", "Sukkot"],
+      "correctAnswer": 1,
+      "topic": "Leviticus"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is the literary genre of the Song of Solomon?",
+      "options": ["Wisdom Literature", "Prophecy", "Poetry", "Narrative"],
+      "correctAnswer": 2,
+      "topic": "Song of Solomon"
+    },
+    {
+      "level": "Advanced",
+      "question": "Which prophetic book is structured as a series of 'burdens' or oracles against nations?",
+      "options": ["Amos", "Nahum", "Habakkuk", "Zephaniah"],
+      "correctAnswer": 1,
+      "topic": "Nahum"
+    },
+    {
+      "level": "Advanced",
+      "question": "In the book of Revelation, what is the number of the beast?",
+      "options": ["616", "666", "777", "888"],
+      "correctAnswer": 1,
+      "topic": "Revelation"
+    },
+    {
+      "level": "Advanced",
+      "question": "What does 'Paraclete' mean?",
+      "options": ["Savior", "Messiah", "Comforter/Advocate", "King of Kings"],
+      "correctAnswer": 2,
+      "topic": "John"
+    },
+    {
+      "level": "Advanced",
+      "question": "Which Pauline epistle is considered by many scholars to be a circular letter?",
+      "options": ["Ephesians", "Colossians", "Philippians", "Philemon"],
+      "correctAnswer": 0,
+      "topic": "Ephesians"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is 'kenosis' in Philippians 2:7?",
+      "options": ["Christ's humility", "Christ's divine nature", "Christ's death", "Christ's resurrection"],
+      "correctAnswer": 0,
+      "topic": "Philippians"
+    },
+    {
+      "level": "Advanced",
+      "question": "Which book of the Bible is most focused on practical wisdom for daily living?",
+      "options": ["Proverbs", "Ecclesiastes", "Job", "Psalms"],
+      "correctAnswer": 0,
+      "topic": "Proverbs"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is the 'already and not yet' concept related to in Christian eschatology?",
+      "options": ["Salvation", "The Kingdom of God", "Justification", "Sanctification"],
+      "correctAnswer": 1,
+      "topic": "Theology"
+    },
+    {
+      "level": "Advanced",
+      "question": "Who were Aquila and Priscilla?",
+      "options": ["Jewish Rulers", "Tentmakers and Missionaries", "Roman Soldiers", "Greek Philosophers"],
+      "correctAnswer": 1,
+      "topic": "Acts"
+    },
+    {
+      "level": "Advanced",
+      "question": "In 1 Timothy, what qualifications are given for elders/overseers?",
+      "options": ["Wealth and Status", "Biblical Knowledge and Teaching Ability", "Age and Experience", "Miraculous Gifts"],
+      "correctAnswer": 1,
+      "topic": "1 Timothy"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is the 'incarnation'?",
+      "options": ["Jesus' resurrection", "God becoming human in Jesus", "The Trinity", "The Holy Spirit"],
+      "correctAnswer": 1,
+      "topic": "Theology"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is the 'Great Commission'?",
+      "options": ["The Ten Commandments", "Sermon on the Mount", "Go and make disciples of all nations", "The Lord's Prayer"],
+      "correctAnswer": 2,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Advanced",
+      "question": "In Hebrews, who is Melchizedek compared to?",
+      "options": ["Abraham", "David", "Moses", "Jesus"],
+      "correctAnswer": 3,
+      "topic": "Hebrews"
+    },
+    {
+      "level": "Advanced",
+      "question": "What does 'Selah' likely mean in the Psalms?",
+      "options": ["Praise", "Silence or pause", "Amen", "Hallelujah"],
+      "correctAnswer": 1,
+      "topic": "Psalms"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the valley where giants lived in Canaan?",
+      "options": ["Valley of Elah", "Valley of Jezreel", "Valley of Rephaim", "Valley of Sorek"],
+      "correctAnswer": 2,
+      "topic": "Numbers"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Which king of Judah was known for religious reform and rediscovering the Book of the Law?",
+      "options": ["Hezekiah", "Josiah", "Manasseh", "Rehoboam"],
+      "correctAnswer": 1,
+      "topic": "2 Kings"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What are the three wisdom books in the Old Testament?",
+      "options": ["Psalms, Proverbs, Job", "Proverbs, Ecclesiastes, Song of Solomon", "Job, Psalms, Ecclesiastes", "Song of Solomon, Lamentations, Proverbs"],
+      "correctAnswer": 1,
+      "topic": "Wisdom Literature"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What is the meaning of 'Immanuel'?",
+      "options": ["God is salvation", "God is with us", "The Lord is righteous", "The Lord provides"],
+      "correctAnswer": 1,
+      "topic": "Isaiah"
+    },
+    {
+      "level": "Intermediate",
+      "question": "In which Gospel does Jesus wash the disciples' feet?",
+      "options": ["Matthew", "Mark", "Luke", "John"],
+      "correctAnswer": 3,
+      "topic": "John"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What is the 'armor of God' described in Ephesians 6?",
+      "options": ["Spiritual defenses for Christians", "Physical armor for battle", "Ritual clothing for priests", "Metaphors for church leadership"],
+      "correctAnswer": 0,
+      "topic": "Ephesians"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who was the Roman centurion who declared Jesus 'Truly this man was the Son of God!'?",
+      "options": ["Cornelius", "Longinus", "Julius", "Agrippa"],
+      "correctAnswer": 1,
+      "topic": "Mark"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the sorcerer who opposed Paul in Cyprus?",
+      "options": ["Simon Magus", "Elymas/Bar-Jesus", "Apollos", "Demetrius"],
+      "correctAnswer": 1,
+      "topic": "Acts"
+    },
+    {
+      "level": "Intermediate",
+      "question": "In 2 Timothy 4:7, Paul speaks of having fought a good...",
+      "options": ["Race", "Game", "Fight", "War"],
+      "correctAnswer": 2,
+      "topic": "2 Timothy"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What does the word 'Deuteronomy' mean?",
+      "options": ["First Law", "Second Law", "Third Law", "New Law"],
+      "correctAnswer": 1,
+      "topic": "Deuteronomy"
+    }
+  ]
