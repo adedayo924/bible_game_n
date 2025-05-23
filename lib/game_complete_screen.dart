@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'game_screen.dart';
 
 class GameCompleteScreen extends StatelessWidget {
   final String playerName;
   final int score;
+  final VoidCallback onPlayAgain; // Store the callback
 
   const GameCompleteScreen(
       {super.key,
-      required this.playerName,
-      required this.score,
-      required void Function() onPlayAgain});
+        required this.playerName,
+        required this.score,
+        required this.onPlayAgain});
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +46,7 @@ class GameCompleteScreen extends StatelessWidget {
             ),
             const SizedBox(height: 40),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GameScreen(playerName: playerName),
-                  ),
-                );
-              },
+              onPressed: onPlayAgain,
               child: const Text("Play Again"),
             ),
           ],
