@@ -21,6 +21,10 @@ class GameState extends State<GameScreen> {
   String friendHint = "";
   final AudioPlayer _audioPlayer = AudioPlayer();
 
+  // New state variables for answer feedback
+  int? _selectedAnswerIndex;
+  bool _answerSubmitted = false;
+
   @override
   void initState() {
     super.initState();
@@ -31,24 +35,61 @@ class GameState extends State<GameScreen> {
     setState(() => isLoading = true);
     game = Game();
     await game.initializeGame(widget.playerName);
+    // Reset feedback state for new question/game
+    _selectedAnswerIndex = null;
+    _answerSubmitted = false;
     setState(() => isLoading = false);
   }
 
   void _playSound(String soundFileName) async {
+    // Ensure you have sound files in assets/sounds/ and pubspec.yaml configured
     await _audioPlayer.play(AssetSource('sounds/$soundFileName'));
   }
 
-  void _handleAnswer(int answerIndex) async {
-    bool isCorrect = await game.checkAnswer(answerIndex);
-    if (isCorrect) {
-      _playSound('correct_answer.mp3');
-    } else {
-      _playSound('incorrect_answer.mp3');
+  // Helper function to determine button color based on state
+  Color _getButtonColor(int optionIndex) {
+    if (!_answerSubmitted) {
+      return Colors.white; // Default color before answer is submitted
     }
 
+    // After answer is submitted
+    if (optionIndex == game.currentQuestion!.correctAnswer) {
+      return Colors.green; // Correct answer
+    } else if (optionIndex == _selectedAnswerIndex) {
+      return Colors.red; // User's incorrect answer
+    }
+    return Colors.white; // Other incorrect answers remain default
+  }
+
+  // Helper function to determine text color for options
+  Color _getButtonTextColor(int optionIndex) {
+    if (!_answerSubmitted) {
+      return Colors.black; // Default text color
+    }
+    // After answer is submitted, if it's the selected or correct answer, make text white for contrast
+    if (optionIndex == game.currentQuestion!.correctAnswer || optionIndex == _selectedAnswerIndex) {
+      return Colors.white;
+    }
+    return Colors.black; // Other answers remain black
+  }
+
+
+  void _handleAnswer(int answerIndex) async {
+    if (_answerSubmitted) return; // Prevent multiple taps
+
     setState(() {
-      if (game.gameOver) {
-        if (game.allQuestionsCompletedSuccessfully) {
+      _selectedAnswerIndex = answerIndex;
+      _answerSubmitted = true; // Mark that an answer has been submitted
+    });
+
+    bool isCorrect = await game.checkAnswer(answerIndex);
+
+    if (isCorrect) {
+      _playSound('correct_answer.mp3');
+      // If correct, no delay, just move to the next question
+      // or game complete if all questions are done
+      setState(() {
+        if (game.gameOver) { // This means all questions were correctly exhausted
           _playSound('game_complete.mp3');
           Navigator.pushReplacement(
             context,
@@ -68,19 +109,30 @@ class GameState extends State<GameScreen> {
             ),
           );
         } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => GameOverScreen(
-                playerName: game.playerName,
-                levelReached: game.currentLevel - 1,
-                score: game.score,
-              ),
-            ),
-          );
+          // Reset feedback state for the next question
+          _selectedAnswerIndex = null;
+          _answerSubmitted = false;
         }
-      }
-    });
+      });
+    } else {
+      _playSound('incorrect_answer.mp3');
+
+      // If incorrect, show feedback colors, then delay, then navigate to Game Over
+      await Future.delayed(const Duration(seconds: 5)); // <-- 5-second delay here
+
+      if (!mounted) return; // Check if the widget is still in the tree
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => GameOverScreen(
+            playerName: game.playerName,
+            levelReached: game.currentLevel - 1,
+            score: game.score,
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -100,10 +152,10 @@ class GameState extends State<GameScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Level ${game.currentLevel}"),
-        backgroundColor: Colors.deepPurpleAccent, // Still keep app bar distinct
-        elevation: 0, // Remove shadow for seamless gradient
+        backgroundColor: Colors.deepPurpleAccent,
+        elevation: 0,
+        foregroundColor: Colors.white, // Ensure app bar text is visible
       ),
-      // Apply gradient to the entire body
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -120,40 +172,42 @@ class GameState extends State<GameScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // ... (rest of your existing UI elements)
               Text(game.currentQuestion!.question,
-                  textAlign: TextAlign.center, // Center the question
-                  style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)), // Added styling
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
               const SizedBox(height: 20),
+              // Dynamically styled answer buttons
               ...game.currentQuestion!.options.asMap().entries.map((entry) {
                 final index = entry.key;
                 final option = entry.value;
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  // We'll apply custom button styling here in the next step
                   child: ElevatedButton(
-                    onPressed: option.isEmpty ? null : () => _handleAnswer(index),
-                    style: ElevatedButton.styleFrom( // Start adding styles
-                      foregroundColor: Colors.black, // Text color
-                      backgroundColor: Colors.white, // Button background
+                    onPressed: (_answerSubmitted || option.isEmpty) ? null : () => _handleAnswer(index), // Disable if already submitted or empty
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: _getButtonTextColor(index), // Text color based on state
+                      backgroundColor: _getButtonColor(index), // Button background based on state
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12), // Slightly rounded corners
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      disabledForegroundColor: Colors.grey, // Text color for disabled buttons
+                      disabledBackgroundColor: Colors.grey[200], // Background for disabled (empty) options
                     ),
                     child: Text(option),
                   ),
                 );
               }),
-              const Spacer(), // Pushes lifelines to the bottom
+              const Spacer(),
               Wrap(
-                spacing: 10.0, // Horizontal spacing between buttons
-                runSpacing: 10.0, // Vertical spacing between lines
-                alignment: WrapAlignment.center, // Center the buttons
+                spacing: 10.0,
+                runSpacing: 10.0,
+                alignment: WrapAlignment.center,
                 children: [
+                  // Lifeline buttons - also disabled if answer submitted
                   ElevatedButton(
-                    onPressed: game.fiftyFiftyUsed
+                    onPressed: (game.fiftyFiftyUsed || _answerSubmitted)
                         ? null
                         : () {
                       game.use5050();
@@ -162,14 +216,16 @@ class GameState extends State<GameScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      backgroundColor: Colors.purple, // Different color for lifelines
+                      backgroundColor: Colors.purple,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      disabledForegroundColor: Colors.white54, // Dim text when disabled
+                      disabledBackgroundColor: Colors.purple[200], // Dim background when disabled
                     ),
                     child: const Text("50/50"),
                   ),
                   ElevatedButton(
-                    onPressed: game.askAudienceUsed
+                    onPressed: (game.askAudienceUsed || _answerSubmitted)
                         ? null
                         : () {
                       audienceVotes = game.askTheAudience();
@@ -181,11 +237,13 @@ class GameState extends State<GameScreen> {
                       backgroundColor: Colors.purple,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      disabledForegroundColor: Colors.white54,
+                      disabledBackgroundColor: Colors.purple[200],
                     ),
                     child: const Text("Ask Audience"),
                   ),
                   ElevatedButton(
-                    onPressed: game.phoneAFriendUsed
+                    onPressed: (game.phoneAFriendUsed || _answerSubmitted)
                         ? null
                         : () {
                       friendHint = game.phoneAFriend();
@@ -197,6 +255,8 @@ class GameState extends State<GameScreen> {
                       backgroundColor: Colors.purple,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      disabledForegroundColor: Colors.white54,
+                      disabledBackgroundColor: Colors.purple[200],
                     ),
                     child: const Text("Phone Friend"),
                   ),
@@ -207,9 +267,14 @@ class GameState extends State<GameScreen> {
                   padding: const EdgeInsets.only(top: 16.0),
                   child: Column(
                     children: audienceVotes.entries.map((entry) {
+                      // Ensure 'option' is not empty before displaying
+                      String optionText = game.currentQuestion!.options[entry.key];
+                      if (optionText.isEmpty) {
+                        return const SizedBox.shrink(); // Hide if option was removed by 50/50
+                      }
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: Text("Option ${entry.key + 1}: ${entry.value}%", style: const TextStyle(color: Colors.white70)),
+                        child: Text("$optionText: ${entry.value}%", style: const TextStyle(color: Colors.white70)),
                       );
                     }).toList(),
                   ),
