@@ -47,8 +47,7 @@ class GameState extends State<GameScreen> {
     }
     setState(() {
       if (game.gameOver) {
-        if (game.currentLevel > 100) {
-          // Check if all levels are completed
+        if (game.allQuestionsCompletedSuccessfully) { // Check if all questions were answered correctly
           _playSound('game_complete.mp3');
           Navigator.pushReplacement(
             context,
@@ -56,6 +55,8 @@ class GameState extends State<GameScreen> {
               builder: (context) => GameCompleteScreen(
                 playerName: game.playerName,
                 score: game.score,
+                // The onPlayAgain function is now passed and used directly within GameCompleteScreen
+                // It's good practice to pass this callback
                 onPlayAgain: () {
                   Navigator.pushReplacement(
                     context,
@@ -92,9 +93,9 @@ class GameState extends State<GameScreen> {
       );
     }
 
-    if (game.currentQuestion == null) {
+    if (game.currentQuestion == null && !game.gameOver) {
       return const Scaffold(
-        body: Center(child: Text("No Questions Available")),
+        body: Center(child: Text("No Questions Available. Check 'assets/questions.json'")),
       );
     }
 
