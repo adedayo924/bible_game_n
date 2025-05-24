@@ -1,6 +1,6 @@
 // game_screen.dart
 import 'package:flutter/material.dart';
-import 'game.dart';
+import '../models/game.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'game_complete_screen.dart';
 import 'game_over_screen.dart';
@@ -171,6 +171,7 @@ class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
             playerName: game.playerName,
             levelReached: game.currentLevel - 1,
             score: game.score,
+            highScore: game.highScore, // <--- Add this line
           ),
         ),
       );
