@@ -7,6 +7,209 @@
       "topic": "Genesis"
     },
     {
+      "level": "Intermediate",
+      "question": "What was the name of the disciple who doubted Jesus' resurrection until he saw him?",
+      "options": ["Peter", "Thomas", "James", "John"],
+      "correctAnswer": 1,
+      "topic": "John"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who was the Roman Emperor during Jesus' ministry?",
+      "options": ["Augustus", "Tiberius", "Claudius", "Nero"],
+      "correctAnswer": 1,
+      "topic": "Luke"
+    },
+    {
+      "level": "Advanced",
+      "question": "Explain the concept of 'Justification by Faith' in Pauline theology.",
+      "options": ["Being declared righteous before God through faith in Christ", "Earning salvation through good works", "Following the Law perfectly", "Being baptized"],
+      "correctAnswer": 0,
+      "topic": "Pauline Epistles"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who was the father of John the Baptist?",
+      "options": ["Zechariah", "Joseph", "Herod", "Caiaphas"],
+      "correctAnswer": 0,
+      "topic": "Luke"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the short tax collector who climbed a tree to see Jesus?",
+      "options": ["Matthew", "Zacchaeus", "Simon", "Bartholomew"],
+      "correctAnswer": 1,
+      "topic": "Luke"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Which book of the Bible is known for its emphasis on faith without works is dead?",
+      "options": ["Romans", "James", "Galatians", "Ephesians"],
+      "correctAnswer": 1,
+      "topic": "James"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who was the first Gentile convert to Christianity?",
+      "options": ["Cornelius", "Lydia", "Timothy", "Titus"],
+      "correctAnswer": 0,
+      "topic": "Acts"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the island where the Apostle John received the Revelation?",
+      "options": ["Patmos", "Crete", "Cyprus", "Rhodes"],
+      "correctAnswer": 0,
+      "topic": "Revelation"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Which Old Testament character is often seen as a foreshadowing of Christ's sacrifice?",
+      "options": ["Isaac", "Joseph", "David", "Moses"],
+      "correctAnswer": 0,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is the 'Great Commission'?",
+      "options": ["Jesus' command to love one another", "The instruction to make disciples of all nations", "The call to worship in spirit and truth", "The prophecy of Jesus' return"],
+      "correctAnswer": 1,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the mountain where Abraham was asked to sacrifice Isaac?",
+      "options": ["Mount Sinai", "Mount Moriah", "Mount Carmel", "Mount Nebo"],
+      "correctAnswer": 1,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who was the wife of Jacob who he loved the most?",
+      "options": ["Leah", "Rachel", "Bilhah", "Zilpah"],
+      "correctAnswer": 1,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the Egyptian official who bought Joseph as a slave?",
+      "options": ["Pharaoh", "Potiphar", "Ahmose", "Ramses"],
+      "correctAnswer": 1,
+      "topic": "Genesis"
+    },
+    {
+      "level": "Advanced",
+      "question": "Discuss the significance of the 'Resurrection' in Christian theology.",
+      "options": ["The central event of Christian faith", "A symbol of hope and new life", "A historical event with profound implications", "All of the above"],
+      "correctAnswer": 3,
+      "topic": "Theology"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is 'Exegesis'?",
+      "options": ["Drawing meaning out of the text", "Reading meaning into the text", "Ignoring the context of the text", "Rejecting the authority of the text"],
+      "correctAnswer": 0,
+      "topic": "Biblical Studies"
+    },
+    {
+      "level": "Advanced",
+      "question": "Explain the different views on 'The Trinity' in Christian theology.",
+      "options": ["One God in three persons", "Three separate gods", "One God who manifests in different forms", "All of the above"],
+      "correctAnswer": 0,
+      "topic": "Theology"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is the 'Great Tribulation'?",
+      "options": ["A period of intense suffering before Christ's return", "A time of peace and prosperity", "A symbolic representation of spiritual warfare", "A historical event in the Old Testament"],
+      "correctAnswer": 0,
+      "topic": "Eschatology"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the high priest who presided over Jesus' trial?",
+      "options": ["Annas", "Caiaphas", "Herod", "Pilate"],
+      "correctAnswer": 1,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Which Old Testament prophet is known for his visions of the end times?",
+      "options": ["Isaiah", "Jeremiah", "Daniel", "Ezekiel"],
+      "correctAnswer": 2,
+      "topic": "Daniel"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the king who ordered the slaughter of all male infants in Bethlehem?",
+      "options": ["Herod the Great", "Herod Antipas", "Herod Agrippa", "Caesar Augustus"],
+      "correctAnswer": 0,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Advanced",
+      "question": "What is the 'Rapture'?",
+      "options": ["The catching up of believers to meet Christ in the air", "A period of intense suffering before Christ's return", "A symbolic representation of spiritual warfare", "A historical event in the Old Testament"],
+      "correctAnswer": 0,
+      "topic": "Eschatology"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who was the disciple known as 'the one whom Jesus loved'?",
+      "options": ["Peter", "James", "John", "Andrew"],
+      "correctAnswer": 2,
+      "topic": "John"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the pool in Jerusalem where Jesus healed a paralyzed man?",
+      "options": ["Bethesda", "Siloam", "Gihon", "Hezekiah"],
+      "correctAnswer": 0,
+      "topic": "John"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Which book of the Bible is known for its emphasis on love?",
+      "options": ["1 Corinthians", "Galatians", "Ephesians", "Philippians"],
+      "correctAnswer": 0,
+      "topic": "1 Corinthians"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the mountain where Jesus gave the Sermon on the Mount?",
+      "options": ["Mount Sinai", "Mount of Beatitudes", "Mount Carmel", "Mount Tabor"],
+      "correctAnswer": 1,
+      "topic": "Matthew"
+    },
+    {
+      "level": "Advanced",
+      "question": "Discuss the significance of the 'Kingdom of God' in Jesus' teachings.",
+      "options": ["A present reality and a future hope", "A political kingdom", "A purely spiritual reality", "All of the above"],
+      "correctAnswer": 0,
+      "topic": "Theology"
+    },
+    {
+      "level": "Intermediate",
+      "question": "What was the name of the Philistine woman who betrayed Samson?",
+      "options": ["Delilah", "Ruth", "Esther", "Deborah"],
+      "correctAnswer": 0,
+      "topic": "Judges"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Which book of the Bible contains the Ten Commandments?",
+      "options": ["Genesis", "Exodus", "Leviticus", "Deuteronomy"],
+      "correctAnswer": 1,
+      "topic": "Exodus"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Who was the father of the twelve tribes of Israel?",
+      "options": ["Abraham", "Isaac", "Jacob", "Joseph"],
+      "correctAnswer": 2,
+      "topic": "Genesis"
+    },
+    {
       "level": "Basic",
       "question": "What did God create on the first day?",
       "options": ["Land and Sea", "Sun, Moon, and Stars", "Light", "Animals"],
@@ -19,6 +222,13 @@
       "options": ["man", "light", "Animals", "Rested"],
       "correctAnswer": 3,
       "topic": "Genesis"
+    },
+    {
+      "level": "Intermediate",
+      "question": "Which judge of Israel was known for his strength and his long hair?",
+      "options": ["Gideon", "Samson", "Jephthah", "Ehud"],
+      "correctAnswer": 1,
+      "topic": "Judges"
     },
     {
       "level": "Basic",
@@ -65,7 +275,7 @@
     {
       "level": "Intermediate",
       "question": "What name did GOD introduced HIMSELF to Moses?",
-      "options": ["I AM THAT I AM", "EBENEZER", "JEHOVAH JIREH"],
+      "options": ["I AM THAT I AM", "EBENEZER", "JEHOVAH JIREH", "Adonai"],
       "correctAnswer": 0,
       "topic": "Moses"
     },
