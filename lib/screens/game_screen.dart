@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import '../models/game.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'game_complete_screen.dart';
 import 'game_over_screen.dart';
+import 'game_complete_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GameScreen extends StatefulWidget {
   final String playerName;
@@ -14,12 +15,13 @@ class GameScreen extends StatefulWidget {
   GameState createState() => GameState();
 }
 
-class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
+class GameState extends State<GameScreen> with TickerProviderStateMixin {
   late Game game;
   bool isLoading = true;
   Map<int, int> audienceVotes = {};
   String friendHint = "";
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  // Removed final AudioPlayer _audioPlayer = AudioPlayer();
+  // As it was declared but not used for playing, and we'll create new players for each sound.
 
   int? _selectedAnswerIndex;
   bool _answerSubmitted = false;
@@ -29,11 +31,27 @@ class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
 
+  late AnimationController _correctAnswerAnimationController;
+  late Animation<double> _checkmarkAnimation;
+  bool _isSoundMuted = false;
+
 
   @override
   void initState() {
     super.initState();
+    _loadSoundSetting();
     initializeGame();
+
+    _correctAnswerAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+    _checkmarkAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _correctAnswerAnimationController,
+        curve: Curves.easeOut,
+      ),
+    );
 
     _animationController = AnimationController(
       vsync: this,
@@ -54,23 +72,17 @@ class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
       if (status == AnimationStatus.completed) {
         if (!mounted) return;
 
-        // --- START OF FIX ---
-        // Capture the selected answer index BEFORE resetting _selectedAnswerIndex
         final int capturedAnswerIndex = _selectedAnswerIndex!;
 
-        // First, advance the game state in the Game model
-        await game.checkAnswer(capturedAnswerIndex); // Pass the captured index here!
+        await game.checkAnswer(capturedAnswerIndex);
 
-        if (!mounted) return; // Check again after async call
+        if (!mounted) return;
 
-        // Now, update the UI state after the game logic has progressed
         setState(() {
-          _showCorrectAnimation = false; // Hide the animation overlay
-          _selectedAnswerIndex = null; // Now it's safe to clear for the next question
-          _answerSubmitted = false; // Allow new answers
+          _showCorrectAnimation = false;
+          _selectedAnswerIndex = null;
+          _answerSubmitted = false;
         });
-        // --- END OF FIX ---
-
 
         // Check for game over (all questions completed successfully)
         if (game.gameOver) {
@@ -78,10 +90,10 @@ class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => GameCompleteScreen(
-                playerName: game.playerName,
-                score: game.score,
-                onPlayAgain: () {
+              builder: (context) => GameCompleteScreen( // <--- CORRECTED TO GameCompleteScreen
+                playerName: game.playerName, // GameCompleteScreen needs playerName
+                score: game.score,           // GameCompleteScreen needs score
+                onPlayAgain: () {            // GameCompleteScreen needs onPlayAgain callback
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -93,9 +105,14 @@ class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
             ),
           );
         }
-        // If not game over, game.checkAnswer already updated currentQuestion,
-        // and the setState above will trigger a rebuild with the new question.
       }
+    });
+  }
+
+  Future<void> _loadSoundSetting() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isSoundMuted = prefs.getBool(Game.soundMutedKey) ?? false;
     });
   }
 
@@ -110,14 +127,26 @@ class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
+    // _audioPlayer.dispose(); // Removed as _audioPlayer member is no longer used
     _animationController.dispose();
+    _correctAnswerAnimationController.dispose();
     super.dispose();
   }
 
-  void _playSound(String soundFileName) async {
-    await _audioPlayer.play(AssetSource('sounds/$soundFileName'));
+  // --- START FIX 1: Dispose player after sound completion ---
+  void _playSound(String soundFileName) {
+    if (_isSoundMuted) {
+      return;
+    }
+    final player = AudioPlayer(); // Create a new instance for each sound
+    player.play(AssetSource('sounds/$soundFileName'));
+
+    // Listen for completion and dispose the player
+    player.onPlayerComplete.listen((event) {
+      player.dispose();
+    });
   }
+  // --- END FIX 1 ---
 
   Color _getButtonColor(int optionIndex) {
     if (!_answerSubmitted) {
@@ -171,7 +200,7 @@ class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
             playerName: game.playerName,
             levelReached: game.currentLevel - 1,
             score: game.score,
-            highScore: game.highScore, // <--- Add this line
+            highScore: game.highScore,
           ),
         ),
       );
@@ -251,7 +280,7 @@ class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
                                 if (_answerSubmitted && index == game.currentQuestion!.correctAnswer) {
                                   return Colors.white;
                                 }
-                                return Colors.grey;
+                                return Colors.black;
                               }
                               return buttonTextColor;
                             },
@@ -285,6 +314,7 @@ class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
                           game.use5050();
                           _playSound('50_50.mp3');
                           setState(() {});
+                          // No need to clear 50/50, as it modifies options permanently
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -302,7 +332,17 @@ class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
                             : () {
                           audienceVotes = game.askTheAudience();
                           _playSound('ask_audience.mp3');
-                          setState(() {});
+                          setState(() {}); // Update UI to show votes
+
+                          // --- START FIX 2: Clear audience votes after a delay ---
+                          Future.delayed(const Duration(seconds: 7), () { // Adjust duration as needed
+                            if (mounted) { // Check if the widget is still active
+                              setState(() {
+                                audienceVotes = {}; // Clear votes
+                              });
+                            }
+                          });
+                          // --- END FIX 2 ---
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -320,7 +360,17 @@ class GameState extends State<GameScreen> with SingleTickerProviderStateMixin {
                             : () {
                           friendHint = game.phoneAFriend();
                           _playSound('phone_a_friend.mp3');
-                          setState(() {});
+                          setState(() {}); // Update UI to show hint
+
+                          // --- START FIX 2: Clear friend hint after a delay ---
+                          Future.delayed(const Duration(seconds: 7), () { // Adjust duration as needed
+                            if (mounted) { // Check if the widget is still active
+                              setState(() {
+                                friendHint = ""; // Clear hint
+                              });
+                            }
+                          });
+                          // --- END FIX 2 ---
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,

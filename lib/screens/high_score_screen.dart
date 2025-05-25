@@ -1,7 +1,7 @@
 // lib/high_score_screen.dart
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'models/game.dart'; // To use the _highScoreKey constant
+import '../models/game.dart'; // To use the _highScoreKey constant
 
 class HighScoreScreen extends StatefulWidget {
   const HighScoreScreen({super.key});

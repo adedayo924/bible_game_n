@@ -1,7 +1,8 @@
-// game.dart
+// lib/game.dart
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert'; // Required for json.decode
-import 'package:flutter/services.dart' show rootBundle; // Required for rootBundle
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:math'; // Required for shuffling
 
 class Game {
   String playerName;
@@ -14,6 +15,11 @@ class Game {
   bool askAudienceUsed = false;
   bool phoneAFriendUsed = false;
   int highScore = 0; // Dedicated variable for the global high score
+
+  // Shared Preferences Keys
+  static const String highScoreKey = 'high_score';
+  static const String soundMutedKey = 'sound_muted';
+  static const String lastPlayerNameKey = 'last_player_name';
 
   Game({this.playerName = 'Player'}) {
     // Moved initialization to initializeGame
@@ -32,12 +38,19 @@ class Game {
     gameOver = false;
   }
 
-  // --- START OF JSON LOADING FIX ---
   Future<List<Question>> _loadQuestions() async {
     try {
       final String response = await rootBundle.loadString('assets/bible_questions.json');
       final List<dynamic> data = json.decode(response);
-      return data.map((questionData) => Question.fromJson(questionData)).toList();
+
+      List<Question> loadedQuestions = data.map((questionData) => Question.fromJson(questionData)).toList();
+
+      // --- START NEW: Sort questions by difficulty and then shuffle ---
+      loadedQuestions.sort((a, b) => a.difficulty.compareTo(b.difficulty));
+      loadedQuestions.shuffle(Random()); // Use Random for better shuffling
+      // --- END NEW ---
+
+      return loadedQuestions;
     } catch (e) {
       print("Error loading questions: $e");
       // Fallback to a default or empty list if loading fails
@@ -45,15 +58,23 @@ class Game {
         Question(
             question: "Failed to load questions. Is 'assets/bible_questions.json' correct?",
             options: ["Yes", "No", "Maybe", "Check Console"],
-            correctAnswer: 3),
+            correctAnswer: 3,
+            difficulty: 1), // Added difficulty for fallback question
       ];
     }
   }
-  // --- END OF JSON LOADING FIX ---
 
   void _nextQuestion() {
     if (questions.isNotEmpty) {
       currentQuestion = questions.removeAt(0);
+
+      // --- START NEW: Shuffle options and update correct answer index ---
+      if (currentQuestion != null) {
+        final String correctOptionText = currentQuestion!.options[currentQuestion!.correctAnswer];
+        currentQuestion!.options.shuffle(Random()); // Shuffle options
+        currentQuestion!.correctAnswer = currentQuestion!.options.indexOf(correctOptionText); // Update correct index
+      }
+      // --- END NEW ---
     } else {
       currentQuestion = null;
       gameOver = true; // No more questions
@@ -101,30 +122,42 @@ class Game {
       for (int i = 0; i < currentQuestion!.options.length; i++) {
         if (currentQuestion!.options[i].isNotEmpty) {
           if (i == correctAnswer) {
-            votes[i] = remainingPercentage > 50 ? 50 + (remainingPercentage - 50) % 51 : remainingPercentage;
+            // Give correct answer a higher but random percentage
+            votes[i] = remainingPercentage > 50 ? 50 + Random().nextInt(remainingPercentage - 50 + 1) : remainingPercentage;
           } else {
-            votes[i] = (remainingPercentage / (currentQuestion!.options.where((option) => option.isNotEmpty).length - 1)).round();
+            // Distribute remaining percentage among other valid options
+            int validOptionsCount = currentQuestion!.options.where((option) => option.isNotEmpty).length;
+            if (validOptionsCount > 1) { // Ensure there's more than just the correct answer
+              votes[i] = (remainingPercentage / (validOptionsCount - (i == correctAnswer ? 0 : 1))).round();
+            } else { // Should not happen if correct answer is the only non-empty option
+              votes[i] = remainingPercentage;
+            }
           }
           remainingPercentage -= votes[i]!;
         } else {
           votes[i] = 0; // No votes for removed options
         }
       }
+      // Distribute any remaining percentage due to rounding
+      if (remainingPercentage > 0) {
+        List<int> nonZeroVotes = votes.keys.where((k) => votes[k]! > 0).toList();
+        if (nonZeroVotes.isNotEmpty) {
+          votes[nonZeroVotes[Random().nextInt(nonZeroVotes.length)]] = votes[nonZeroVotes[Random().nextInt(nonZeroVotes.length)]]! + remainingPercentage;
+        }
+      }
     }
     return votes;
   }
 
+
   String phoneAFriend() {
     phoneAFriendUsed = true;
     if (currentQuestion != null) {
-      // Replace with more sophisticated logic (e.g., probability-based hints)
+      // Return the correct answer with a friendly message
       return "I think the answer is ${currentQuestion!.options[currentQuestion!.correctAnswer]}";
     }
     return "I'm not sure.";
   }
-
-  // Shared Preferences for High Score
-  static const String highScoreKey = 'high_score'; // <--- REMOVED THE UNDERSCORE
 
   Future<void> _loadHighScore() async {
     final prefs = await SharedPreferences.getInstance();
@@ -144,20 +177,21 @@ class Question {
   String question;
   List<String> options;
   int correctAnswer;
+  int difficulty; // <--- NEW: Difficulty property
 
   Question(
       {required this.question,
         required this.options,
-        required this.correctAnswer});
+        required this.correctAnswer,
+        required this.difficulty}); // <--- NEW: difficulty in constructor
 
-  // --- START OF JSON FACTORY CONSTRUCTOR ---
   // Factory constructor for creating a Question from a JSON map
   factory Question.fromJson(Map<String, dynamic> json) {
     return Question(
       question: json['question'],
       options: List<String>.from(json['options']),
       correctAnswer: json['correctAnswer'],
+      difficulty: json['difficulty'] ?? 1, // <--- NEW: Default to 1 if not provided
     );
   }
-// --- END OF JSON FACTORY CONSTRUCTOR ---
 }
