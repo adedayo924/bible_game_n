@@ -1,7 +1,8 @@
 // lib/home_screen.dart
 import 'package:flutter/material.dart';
-import 'screens/player_name_input_screen.dart'; // We'll make this a separate file for modularity
+import 'player_name_input_screen.dart'; // We'll make this a separate file for modularity
 import 'high_score_screen.dart'; // Will create this next
+import '../settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -74,14 +75,16 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Settings Button (Placeholder)
+              // Settings Button
               _buildMenuButton(
                 context,
                 text: 'Settings',
                 onPressed: () {
-                  // TODO: Implement Settings screen later
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Settings screen coming soon!')),
+                  Navigator.push( // Navigate to the SettingsScreen
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsScreen(),
+                    ),
                   );
                 },
               ),
