@@ -1,8 +1,11 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart'; // Import your new HomeScreen
+import 'package:new_game/screens/home_screen.dart';
+import 'package:new_game/models/game.dart'; // Import Game class
 
-void main() {
+void main() async { // main needs to be async
+  WidgetsFlutterBinding.ensureInitialized(); // Required for async operations before runApp
+  await Game.loadSettings(); // Load all settings (including timed mode)
   runApp(const MyApp());
 }
 
@@ -15,10 +18,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Bible Knowledge Game',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
+        useMaterial3: true, // Enable Material 3
+        primarySwatch: Colors.deepPurple,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const HomeScreen(), // Set HomeScreen as the initial screen
+      home: const HomeScreen(),
     );
   }
 }

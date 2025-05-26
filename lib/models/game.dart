@@ -1,197 +1,310 @@
-// lib/game.dart
-import 'package:shared_preferences/shared_preferences.dart';
+// lib/models/game.dart
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'dart:math'; // Required for shuffling
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:math';
 
+// PlayerProfile class
+class PlayerProfile {
+  String name;
+  int highScore;
+
+  PlayerProfile({required this.name, this.highScore = 0});
+
+  // Convert PlayerProfile to JSON
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'highScore': highScore,
+  };
+
+  // Create PlayerProfile from JSON
+  factory PlayerProfile.fromJson(Map<String, dynamic> json) {
+    return PlayerProfile(
+      name: json['name'],
+      highScore: json['highScore'] ?? 0,
+    );
+  }
+}
+
+// Game class (Complete and Corrected with missing static methods)
 class Game {
-  String playerName;
-  int score = 0; // Current game score
-  int currentLevel = 1;
-  List<Question> questions = [];
+  List<Question> _allQuestions = [];
+  List<Question> _currentDifficultyQuestions = [];
   Question? currentQuestion;
+  int currentLevel = 1;
+  int score = 0;
   bool gameOver = false;
+
   bool fiftyFiftyUsed = false;
   bool askAudienceUsed = false;
   bool phoneAFriendUsed = false;
-  int highScore = 0; // Dedicated variable for the global high score
 
-  // Shared Preferences Keys
-  static const String highScoreKey = 'high_score';
-  static const String soundMutedKey = 'sound_muted';
-  static const String lastPlayerNameKey = 'last_player_name';
+  // Static keys for SharedPreferences
+  static const String _allPlayerProfilesKey = 'allPlayerProfiles';
+  static const String lastPlayerNameKey = 'lastPlayerName'; // This was already there
+  static const String soundMutedKey = 'isSoundMuted';
+  static const String _timedModeEnabledKey = 'isTimedModeEnabled';
 
-  Game({this.playerName = 'Player'}) {
-    // Moved initialization to initializeGame
+  // Static variables for settings
+  static bool isSoundMuted = false;
+  static bool isTimedModeEnabled = false;
+
+  PlayerProfile? activePlayerProfile;
+
+  Game({this.activePlayerProfile});
+
+  // --- NEW: Method to initialize the game with a specific player profile ---
+  Future<void> initializeGame(PlayerProfile playerProfile) async {
+    activePlayerProfile = playerProfile;
+    await _loadQuestions();
+    _resetGame();
   }
 
-  Future<void> initializeGame(String playerName) async {
-    this.playerName = playerName;
-    score = 0; // Reset current score for a new game
+  // --- Static Methods for Global Settings and Player Names ---
+
+  // Load all global settings (called once at app start)
+  static Future<void> loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    isSoundMuted = prefs.getBool(soundMutedKey) ?? false;
+    isTimedModeEnabled = prefs.getBool(_timedModeEnabledKey) ?? false;
+  }
+
+  // Save sound setting
+  static Future<void> saveSoundSetting(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(soundMutedKey, value);
+    isSoundMuted = value;
+  }
+
+  // Save timed mode setting
+  static Future<void> saveTimedModeSetting(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_timedModeEnabledKey, value);
+    isTimedModeEnabled = value;
+  }
+
+  // NEW: Load last played player name
+  static Future<String?> loadLastPlayerName() async { // <--- Added this method
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(lastPlayerNameKey);
+  }
+
+  // NEW: Save last played player name
+  static Future<void> saveLastPlayerName(String name) async { // <--- Added this method
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(lastPlayerNameKey, name);
+  }
+
+  // --- Question and Game Logic ---
+
+  Future<void> _loadQuestions() async {
+    final String response = await rootBundle.loadString('assets/bible_questions.json');
+    final List<dynamic> data = json.decode(response);
+    _allQuestions = data.map((json) => Question.fromJson(json)).toList();
+  }
+
+  void _resetGame() {
+    score = 0;
     currentLevel = 1;
-    questions = await _loadQuestions(); // Load actual questions from JSON
-    await _loadHighScore(); // Load the actual high score into `this.highScore`
-    _nextQuestion();
+    gameOver = false;
     fiftyFiftyUsed = false;
     askAudienceUsed = false;
     phoneAFriendUsed = false;
-    gameOver = false;
+    _prepareQuestionsForCurrentLevel();
+    _nextQuestion();
   }
 
-  Future<List<Question>> _loadQuestions() async {
-    try {
-      final String response = await rootBundle.loadString('assets/bible_questions.json');
-      final List<dynamic> data = json.decode(response);
-
-      List<Question> loadedQuestions = data.map((questionData) => Question.fromJson(questionData)).toList();
-
-      // --- START NEW: Sort questions by difficulty and then shuffle ---
-      loadedQuestions.sort((a, b) => a.difficulty.compareTo(b.difficulty));
-      loadedQuestions.shuffle(Random()); // Use Random for better shuffling
-      // --- END NEW ---
-
-      return loadedQuestions;
-    } catch (e) {
-      print("Error loading questions: $e");
-      // Fallback to a default or empty list if loading fails
-      return [
-        Question(
-            question: "Failed to load questions. Is 'assets/bible_questions.json' correct?",
-            options: ["Yes", "No", "Maybe", "Check Console"],
-            correctAnswer: 3,
-            difficulty: 1), // Added difficulty for fallback question
-      ];
-    }
+  void _prepareQuestionsForCurrentLevel() {
+    _currentDifficultyQuestions = _allQuestions
+        .where((q) => q.difficulty == currentLevel)
+        .toList();
+    _currentDifficultyQuestions.shuffle(Random());
   }
 
   void _nextQuestion() {
-    if (questions.isNotEmpty) {
-      currentQuestion = questions.removeAt(0);
-
-      // --- START NEW: Shuffle options and update correct answer index ---
-      if (currentQuestion != null) {
-        final String correctOptionText = currentQuestion!.options[currentQuestion!.correctAnswer];
-        currentQuestion!.options.shuffle(Random()); // Shuffle options
-        currentQuestion!.correctAnswer = currentQuestion!.options.indexOf(correctOptionText); // Update correct index
+    if (_currentDifficultyQuestions.isEmpty) {
+      currentLevel++;
+      _prepareQuestionsForCurrentLevel();
+      if (_currentDifficultyQuestions.isEmpty) {
+        currentQuestion = null;
+        gameOver = true;
+        return;
       }
-      // --- END NEW ---
-    } else {
-      currentQuestion = null;
-      gameOver = true; // No more questions
     }
+    currentQuestion = _currentDifficultyQuestions.removeAt(0);
   }
 
   Future<bool> checkAnswer(int selectedAnswer) async {
-    if (currentQuestion != null &&
-        selectedAnswer == currentQuestion!.correctAnswer) {
-      score += currentLevel * 100; // Increase score based on level
-      currentLevel++; // Increase level
-      _nextQuestion(); // Load the next question
-      await _saveHighScore(); // Save the new high score if it's higher
+    if (currentQuestion != null && selectedAnswer == currentQuestion!.correctAnswer) {
+      score += currentLevel * 100;
+      currentLevel++;
+      _nextQuestion();
       return true;
     } else {
+      gameOver = true;
       return false;
     }
   }
 
-  void use5050() {
-    if (currentQuestion != null) {
-      fiftyFiftyUsed = true;
-      // Remove two incorrect answers
-      final correctAnswer = currentQuestion!.correctAnswer;
-      final incorrectAnswers = <int>[];
-      for (int i = 0; i < currentQuestion!.options.length; i++) {
-        if (i != correctAnswer) {
-          incorrectAnswers.add(i);
-        }
+  // --- Profile Management (static methods) ---
+
+  // Save a single player profile (adds/updates in the list)
+  static Future<void> savePlayerProfile(PlayerProfile profile) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<PlayerProfile> allProfiles = await loadAllPlayerProfiles();
+
+    int existingIndex = allProfiles.indexWhere((p) => p.name == profile.name);
+    if (existingIndex != -1) {
+      if (profile.highScore > allProfiles[existingIndex].highScore) {
+        allProfiles[existingIndex].highScore = profile.highScore;
       }
-      incorrectAnswers.shuffle();
-      final answersToRemove = incorrectAnswers.take(2).toList();
-      for (final index in answersToRemove) {
-        currentQuestion!.options[index] = ""; // Mark as empty
+    } else {
+      allProfiles.add(profile);
+    }
+    // Now save the entire updated list
+    final String jsonString = json.encode(allProfiles.map((p) => p.toJson()).toList());
+    await prefs.setString(_allPlayerProfilesKey, jsonString);
+  }
+
+  // Load all player profiles
+  static Future<List<PlayerProfile>> loadAllPlayerProfiles() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? jsonString = prefs.getString(_allPlayerProfilesKey);
+    if (jsonString == null) {
+      return [];
+    }
+    final List<dynamic> jsonList = json.decode(jsonString);
+    return jsonList.map((json) => PlayerProfile.fromJson(json)).toList();
+  }
+
+  // Save an entire list of player profiles (used after deletions)
+  static Future<void> saveAllPlayerProfiles(List<PlayerProfile> profiles) async {
+    final prefs = await SharedPreferences.getInstance();
+    final String jsonString = json.encode(profiles.map((p) => p.toJson()).toList());
+    await prefs.setString(_allPlayerProfilesKey, jsonString);
+  }
+
+  // Call this method from GameCompleteScreen and GameOverScreen
+  Future<void> saveActivePlayerHighScore() async {
+    if (activePlayerProfile != null) {
+      if (score > activePlayerProfile!.highScore) {
+        activePlayerProfile!.highScore = score;
+      }
+      await savePlayerProfile(activePlayerProfile!);
+    }
+  }
+
+  // --- Lifeline Methods ---
+  void use5050() {
+    if (fiftyFiftyUsed || currentQuestion == null) return;
+
+    List<int> incorrectOptions = [];
+    for (int i = 0; i < currentQuestion!.options.length; i++) {
+      if (i != currentQuestion!.correctAnswer) {
+        incorrectOptions.add(i);
       }
     }
+    incorrectOptions.shuffle(Random());
+    currentQuestion!.options[incorrectOptions[0]] = "";
+    currentQuestion!.options[incorrectOptions[1]] = "";
+    fiftyFiftyUsed = true;
   }
 
   Map<int, int> askTheAudience() {
-    askAudienceUsed = true;
-    final votes = <int, int>{};
-    if (currentQuestion != null) {
-      final correctAnswer = currentQuestion!.correctAnswer;
-      int remainingPercentage = 100;
-      for (int i = 0; i < currentQuestion!.options.length; i++) {
-        if (currentQuestion!.options[i].isNotEmpty) {
-          if (i == correctAnswer) {
-            // Give correct answer a higher but random percentage
-            votes[i] = remainingPercentage > 50 ? 50 + Random().nextInt(remainingPercentage - 50 + 1) : remainingPercentage;
-          } else {
-            // Distribute remaining percentage among other valid options
-            int validOptionsCount = currentQuestion!.options.where((option) => option.isNotEmpty).length;
-            if (validOptionsCount > 1) { // Ensure there's more than just the correct answer
-              votes[i] = (remainingPercentage / (validOptionsCount - (i == correctAnswer ? 0 : 1))).round();
-            } else { // Should not happen if correct answer is the only non-empty option
-              votes[i] = remainingPercentage;
-            }
-          }
-          remainingPercentage -= votes[i]!;
-        } else {
-          votes[i] = 0; // No votes for removed options
-        }
+    if (askAudienceUsed || currentQuestion == null) return {};
+
+    Map<int, int> votes = {0: 0, 1: 0, 2: 0, 3: 0};
+    int totalVotes = 100;
+    Random random = Random();
+
+    int correctVote = 60 + random.nextInt(21);
+    votes[currentQuestion!.correctAnswer] = correctVote;
+    totalVotes -= correctVote;
+
+    List<int> incorrectOptions = [];
+    for (int i = 0; i < currentQuestion!.options.length; i++) {
+      if (i != currentQuestion!.correctAnswer && currentQuestion!.options[i].isNotEmpty) {
+        incorrectOptions.add(i);
       }
-      // Distribute any remaining percentage due to rounding
-      if (remainingPercentage > 0) {
-        List<int> nonZeroVotes = votes.keys.where((k) => votes[k]! > 0).toList();
-        if (nonZeroVotes.isNotEmpty) {
-          votes[nonZeroVotes[Random().nextInt(nonZeroVotes.length)]] = votes[nonZeroVotes[Random().nextInt(nonZeroVotes.length)]]! + remainingPercentage;
+    }
+
+    if (incorrectOptions.isNotEmpty) {
+      while (totalVotes > 0) {
+        for (int optionIndex in incorrectOptions) {
+          if (totalVotes == 0) break;
+          int vote = random.nextInt(min(totalVotes + 1, 20));
+          votes[optionIndex] = (votes[optionIndex] ?? 0) + vote;
+          totalVotes -= vote;
         }
       }
     }
-    return votes;
-  }
+    int currentSum = votes.values.reduce((sum, element) => sum + element);
+    if (currentSum != 100) {
+      votes[currentQuestion!.correctAnswer] = votes[currentQuestion!.correctAnswer]! + (100 - currentSum);
+    }
 
+    Map<int, int> finalVotes = {};
+    votes.forEach((key, value) {
+      if (currentQuestion!.options[key].isNotEmpty && value > 0) {
+        finalVotes[key] = value;
+      } else if (currentQuestion!.options[key].isNotEmpty && value == 0) {
+        finalVotes[key] = 0;
+      }
+    });
+
+    askAudienceUsed = true;
+    return finalVotes;
+  }
 
   String phoneAFriend() {
+    if (phoneAFriendUsed || currentQuestion == null) return "No hint available.";
+
+    Random random = Random();
+    String hint = "";
+    if (random.nextDouble() < 0.8) {
+      hint = "I'm fairly sure the answer is '${currentQuestion!.options[currentQuestion!.correctAnswer]}'.";
+    } else {
+      List<int> incorrectOptions = [];
+      for (int i = 0; i < currentQuestion!.options.length; i++) {
+        if (i != currentQuestion!.correctAnswer && currentQuestion!.options[i].isNotEmpty) {
+          incorrectOptions.add(i);
+        }
+      }
+      if (incorrectOptions.isNotEmpty) {
+        int randomIncorrectIndex = incorrectOptions[random.nextInt(incorrectOptions.length)];
+        hint = "I think it might be '${currentQuestion!.options[randomIncorrectIndex]}', but I'm not 100% sure.";
+      } else {
+        hint = "Hmm, this is a tough one, I'm not sure!";
+      }
+    }
     phoneAFriendUsed = true;
-    if (currentQuestion != null) {
-      // Return the correct answer with a friendly message
-      return "I think the answer is ${currentQuestion!.options[currentQuestion!.correctAnswer]}";
-    }
-    return "I'm not sure.";
-  }
-
-  Future<void> _loadHighScore() async {
-    final prefs = await SharedPreferences.getInstance();
-    highScore = prefs.getInt(highScoreKey) ?? 0;
-  }
-
-  Future<void> _saveHighScore() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (score > highScore) {
-      await prefs.setInt(highScoreKey, score);
-      highScore = score;
-    }
+    return hint;
   }
 }
 
+// Question class
 class Question {
   String question;
   List<String> options;
   int correctAnswer;
-  int difficulty; // <--- NEW: Difficulty property
+  int difficulty;
+  String? hint;
 
-  Question(
-      {required this.question,
-        required this.options,
-        required this.correctAnswer,
-        required this.difficulty}); // <--- NEW: difficulty in constructor
+  Question({
+    required this.question,
+    required this.options,
+    required this.correctAnswer,
+    required this.difficulty,
+    this.hint,
+  });
 
-  // Factory constructor for creating a Question from a JSON map
   factory Question.fromJson(Map<String, dynamic> json) {
     return Question(
       question: json['question'],
       options: List<String>.from(json['options']),
       correctAnswer: json['correctAnswer'],
-      difficulty: json['difficulty'] ?? 1, // <--- NEW: Default to 1 if not provided
+      difficulty: json['difficulty'] ?? 1,
+      hint: json['hint'],
     );
   }
 }
