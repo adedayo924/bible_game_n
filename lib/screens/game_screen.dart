@@ -86,15 +86,14 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
 
         if (!mounted) return;
 
-        // --- MODIFIED HINT DISPLAY LOGIC ---
+        // Hint display logic
         if (isCorrect && game.currentQuestion?.hint != null) {
           setState(() {
             _currentHintText = game.currentQuestion!.hint;
             _showHint = true;
             _showCorrectAnimation = false;
-            // NEW: Reset selected answer and submission status IMMEDIATELY for hint
-            _selectedAnswerIndex = null;
-            _answerSubmitted = false;
+            _selectedAnswerIndex = null; // Ensure no highlighting under hint
+            _answerSubmitted = false;    // Ensure no highlighting under hint
           });
           _playSound('hint_reveal.mp3');
           await Future.delayed(const Duration(seconds: 4));
@@ -104,16 +103,13 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
             _currentHintText = null;
           });
         }
-        // --- END MODIFIED HINT DISPLAY LOGIC ---
 
         if (!mounted) return;
 
         // This block now only runs if there was no hint, or after the hint has disappeared
-        // It's still needed to ensure state is reset if no hint was shown.
-        // If hint was shown, _selectedAnswerIndex and _answerSubmitted were already reset.
         setState(() {
           _showCorrectAnimation = false;
-          // Only reset these if they haven't been reset by the hint logic already
+          // Ensure state is reset if no hint was shown, or as a final cleanup
           if (_selectedAnswerIndex != null || _answerSubmitted) {
             _selectedAnswerIndex = null;
             _answerSubmitted = false;
@@ -319,10 +315,13 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
         );
       } else {
         _playSound('correct_answer.mp3');
+        // NEW: Add a delay here to let the correct answer sound play before animation/hint
+        await Future.delayed(const Duration(seconds: 2)); // Adjust duration as needed (e.g., 1-2 seconds)
+
         setState(() {
           _showCorrectAnimation = true;
         });
-        _animationController.forward(from: 0.0);
+        _animationController.forward(from: 0.5);
       }
     }
   }
@@ -342,13 +341,16 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
     }
 
     return Scaffold(
+      extendBodyBehindAppBar: true, // NEW: Extend body behind app bar
+      extendBody: true,             // NEW: Extend body behind bottom system nav bar
       appBar: AppBar(
         title: Text("Level ${game.currentLevel} | Score: ${game.score}"),
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: Colors.deepPurpleAccent.withOpacity(0.7), // Adjusted opacity for background to show
         elevation: 0,
         foregroundColor: Colors.white,
       ),
       body: Container(
+        // This Container now ensures the gradient covers the entire screen, including safe areas
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -361,209 +363,216 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
         ),
         child: Stack(
           children: [
-            SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (Game.isTimedModeEnabled)
-                    Column(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: LinearProgressIndicator(
-                            value: _timeRemaining / _maxTime,
-                            backgroundColor: Colors.grey[300],
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              _timeRemaining > _maxTime / 3 ? Colors.greenAccent : Colors.redAccent,
+            // Ensure padding for SingleChildScrollView respects safe areas and Appbar height
+            SafeArea( // Add SafeArea for the main content
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (Game.isTimedModeEnabled)
+                      Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: LinearProgressIndicator(
+                              value: _timeRemaining / _maxTime,
+                              backgroundColor: Colors.grey[300],
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                _timeRemaining > _maxTime / 3 ? Colors.greenAccent : Colors.redAccent,
+                              ),
+                              minHeight: 15,
                             ),
-                            minHeight: 15,
                           ),
+                          const SizedBox(height: 5),
+                          Text(
+                            'Time Left: $_timeRemaining seconds',
+                            style: const TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          const SizedBox(height: 15),
+                        ],
+                      ),
+                    Text(game.currentQuestion!.question,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 20),
+                    // Answer Options
+                    ...game.currentQuestion!.options.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final option = entry.value;
+
+                      final Color buttonBackgroundColor = _getButtonColor(index);
+                      final Color buttonTextColor = _getButtonTextColor(index);
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: ElevatedButton(
+                          onPressed: (_answerSubmitted || option.isEmpty) ? null : () => _handleAnswer(index),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.disabled)) {
+                                  if (_answerSubmitted && index == game.currentQuestion!.correctAnswer) {
+                                    return Colors.green;
+                                  }
+                                  return Colors.grey[200]!;
+                                }
+                                return buttonBackgroundColor;
+                              },
+                            ),
+                            foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.disabled)) {
+                                  if (_answerSubmitted && index == game.currentQuestion!.correctAnswer) {
+                                    return Colors.white;
+                                  }
+                                  return Colors.black;
+                                }
+                                return buttonTextColor;
+                              },
+                            ),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                              const EdgeInsets.symmetric(vertical: 15),
+                            ),
+                            textStyle: MaterialStateProperty.all<TextStyle>(
+                              const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          child: Text(option),
                         ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'Time Left: $_timeRemaining seconds',
-                          style: const TextStyle(fontSize: 18, color: Colors.white),
+                      );
+                    }),
+                    const SizedBox(height: 20),
+                    // Lifeline buttons
+                    Wrap(
+                      spacing: 10.0,
+                      runSpacing: 10.0,
+                      alignment: WrapAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: (game.fiftyFiftyUsed || _answerSubmitted)
+                              ? null
+                              : () {
+                            game.use5050();
+                            _playSound('50_50.mp3');
+                            setState(() {});
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.purple,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            disabledForegroundColor: Colors.white54,
+                            disabledBackgroundColor: Colors.purple[200],
+                          ),
+                          child: const Text("50/50"),
                         ),
-                        const SizedBox(height: 15),
+                        ElevatedButton(
+                          onPressed: (game.askAudienceUsed || _answerSubmitted)
+                              ? null
+                              : () async {
+                            final Map<int, int> newAudienceVotes = game.askTheAudience();
+
+                            _playSound('audience_murmur.mp3');
+
+                            await Future.delayed(const Duration(seconds: 3));
+
+                            if (!mounted) return;
+
+                            _playSound('audience_reveal.mp3');
+
+                            setState(() {
+                              audienceVotes = newAudienceVotes;
+                            });
+
+                            await Future.delayed(const Duration(seconds: 7));
+                            if (mounted) {
+                              setState(() {
+                                audienceVotes = {};
+                              });
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.purple,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            disabledForegroundColor: Colors.white54,
+                            disabledBackgroundColor: Colors.purple[200],
+                          ),
+                          child: const Text("Ask Audience"),
+                        ),
+                        ElevatedButton(
+                          onPressed: (game.phoneAFriendUsed || _answerSubmitted)
+                              ? null
+                              : () async {
+                            final String newFriendHint = game.phoneAFriend();
+
+                            _playSound('phone_ring.mp3');
+
+                            await Future.delayed(const Duration(seconds: 3));
+
+                            if (!mounted) return;
+
+                            _playSound('phone_friend_speaks.mp3');
+
+                            setState(() {
+                              friendHint = newFriendHint;
+                            });
+
+                            await Future.delayed(const Duration(seconds: 7));
+                            if (mounted) {
+                              setState(() {
+                                friendHint = "";
+                              });
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.purple,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            disabledForegroundColor: Colors.white54,
+                            disabledBackgroundColor: Colors.purple[200],
+                          ),
+                          child: const Text("Phone Friend"),
+                        ),
                       ],
                     ),
-                  Text(game.currentQuestion!.question,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 20),
-                  ...game.currentQuestion!.options.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final option = entry.value;
-
-                    final Color buttonBackgroundColor = _getButtonColor(index);
-                    final Color buttonTextColor = _getButtonTextColor(index);
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: ElevatedButton(
-                        onPressed: (_answerSubmitted || option.isEmpty) ? null : () => _handleAnswer(index),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                                (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.disabled)) {
-                                if (_answerSubmitted && index == game.currentQuestion!.correctAnswer) {
-                                  return Colors.green;
-                                }
-                                return Colors.grey[200]!;
-                              }
-                              return buttonBackgroundColor;
-                            },
-                          ),
-                          foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                                (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.disabled)) {
-                                if (_answerSubmitted && index == game.currentQuestion!.correctAnswer) {
-                                  return Colors.white;
-                                }
-                                return Colors.black;
-                              }
-                              return buttonTextColor;
-                            },
-                          ),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            const EdgeInsets.symmetric(vertical: 15),
-                          ),
-                          textStyle: MaterialStateProperty.all<TextStyle>(
-                            const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                          ),
+                    // Audience votes and friend hint display
+                    if (audienceVotes.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: Column(
+                          children: audienceVotes.entries.map((entry) {
+                            String optionText = game.currentQuestion!.options[entry.key];
+                            if (optionText.isEmpty) {
+                              return const SizedBox.shrink();
+                            }
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Text("$optionText: ${entry.value}%", style: const TextStyle(color: Colors.white70)),
+                            );
+                          }).toList(),
                         ),
-                        child: Text(option),
                       ),
-                    );
-                  }),
-                  const SizedBox(height: 20),
-                  Wrap(
-                    spacing: 10.0,
-                    runSpacing: 10.0,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: (game.fiftyFiftyUsed || _answerSubmitted)
-                            ? null
-                            : () {
-                          game.use5050();
-                          _playSound('50_50.mp3');
-                          setState(() {});
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.purple,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          disabledForegroundColor: Colors.white54,
-                          disabledBackgroundColor: Colors.purple[200],
-                        ),
-                        child: const Text("50/50"),
+                    if (friendHint.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: Text("Friend's Hint: $friendHint", style: const TextStyle(color: Colors.white)),
                       ),
-                      ElevatedButton(
-                        onPressed: (game.askAudienceUsed || _answerSubmitted)
-                            ? null
-                            : () async {
-                          final Map<int, int> newAudienceVotes = game.askTheAudience();
-
-                          _playSound('audience_murmur.mp3');
-
-                          await Future.delayed(const Duration(seconds: 3));
-
-                          if (!mounted) return;
-
-                          _playSound('audience_reveal.mp3');
-
-                          setState(() {
-                            audienceVotes = newAudienceVotes;
-                          });
-
-                          await Future.delayed(const Duration(seconds: 7));
-                          if (mounted) {
-                            setState(() {
-                              audienceVotes = {};
-                            });
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.purple,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          disabledForegroundColor: Colors.white54,
-                          disabledBackgroundColor: Colors.purple[200],
-                        ),
-                        child: const Text("Ask Audience"),
-                      ),
-                      ElevatedButton(
-                        onPressed: (game.phoneAFriendUsed || _answerSubmitted)
-                            ? null
-                            : () async {
-                          final String newFriendHint = game.phoneAFriend();
-
-                          _playSound('phone_ring.mp3');
-
-                          await Future.delayed(const Duration(seconds: 3));
-
-                          if (!mounted) return;
-
-                          _playSound('phone_friend_speaks.mp3');
-
-                          setState(() {
-                            friendHint = newFriendHint;
-                          });
-
-                          await Future.delayed(const Duration(seconds: 7));
-                          if (mounted) {
-                            setState(() {
-                              friendHint = "";
-                            });
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.purple,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          disabledForegroundColor: Colors.white54,
-                          disabledBackgroundColor: Colors.purple[200],
-                        ),
-                        child: const Text("Phone Friend"),
-                      ),
-                    ],
-                  ),
-                  if (audienceVotes.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
-                      child: Column(
-                        children: audienceVotes.entries.map((entry) {
-                          String optionText = game.currentQuestion!.options[entry.key];
-                          if (optionText.isEmpty) {
-                            return const SizedBox.shrink();
-                          }
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: Text("$optionText: ${entry.value}%", style: const TextStyle(color: Colors.white70)),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  if (friendHint.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
-                      child: Text("Friend's Hint: $friendHint", style: const TextStyle(color: Colors.white)),
-                    ),
-                  const SizedBox(height: 20),
-                ],
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
+            // Correct answer animation overlay
             if (_showCorrectAnimation)
               Positioned.fill(
                 child: Center(
@@ -580,6 +589,7 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
                   ),
                 ),
               ),
+            // Hint text overlay
             if (_showHint && _currentHintText != null)
               Positioned.fill(
                 child: Center(
