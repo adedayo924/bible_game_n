@@ -1,10 +1,11 @@
-// game_screen.dart
+// lib/screens/game_screen.dart
 import 'package:flutter/material.dart';
 import '../models/game.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'game_over_screen.dart';
 import 'game_complete_screen.dart';
+import 'game_over_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async'; // Import for Timer
 
 class GameScreen extends StatefulWidget {
   final String playerName;
@@ -20,8 +21,8 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
   bool isLoading = true;
   Map<int, int> audienceVotes = {};
   String friendHint = "";
-  // Removed final AudioPlayer _audioPlayer = AudioPlayer();
-  // As it was declared but not used for playing, and we'll create new players for each sound.
+  bool _showHint = false;
+  String? _currentHintText;
 
   int? _selectedAnswerIndex;
   bool _answerSubmitted = false;
@@ -35,12 +36,19 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
   late Animation<double> _checkmarkAnimation;
   bool _isSoundMuted = false;
 
+  Timer? _timer;
+  int _timeRemaining = 50;
+  final int _maxTime = 50;
 
   @override
   void initState() {
     super.initState();
     _loadSoundSetting();
-    initializeGame();
+    initializeGameSession().then((_) {
+      if (mounted && Game.isTimedModeEnabled) {
+        _startTimer();
+      }
+    });
 
     _correctAnswerAnimationController = AnimationController(
       vsync: this,
@@ -74,79 +82,167 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
 
         final int capturedAnswerIndex = _selectedAnswerIndex!;
 
-        await game.checkAnswer(capturedAnswerIndex);
+        bool isCorrect = await game.checkAnswer(capturedAnswerIndex);
 
         if (!mounted) return;
 
+        // --- MODIFIED HINT DISPLAY LOGIC ---
+        if (isCorrect && game.currentQuestion?.hint != null) {
+          setState(() {
+            _currentHintText = game.currentQuestion!.hint;
+            _showHint = true;
+            _showCorrectAnimation = false;
+            // NEW: Reset selected answer and submission status IMMEDIATELY for hint
+            _selectedAnswerIndex = null;
+            _answerSubmitted = false;
+          });
+          _playSound('hint_reveal.mp3');
+          await Future.delayed(const Duration(seconds: 4));
+          if (!mounted) return;
+          setState(() {
+            _showHint = false;
+            _currentHintText = null;
+          });
+        }
+        // --- END MODIFIED HINT DISPLAY LOGIC ---
+
+        if (!mounted) return;
+
+        // This block now only runs if there was no hint, or after the hint has disappeared
+        // It's still needed to ensure state is reset if no hint was shown.
+        // If hint was shown, _selectedAnswerIndex and _answerSubmitted were already reset.
         setState(() {
           _showCorrectAnimation = false;
-          _selectedAnswerIndex = null;
-          _answerSubmitted = false;
+          // Only reset these if they haven't been reset by the hint logic already
+          if (_selectedAnswerIndex != null || _answerSubmitted) {
+            _selectedAnswerIndex = null;
+            _answerSubmitted = false;
+          }
         });
 
-        // Check for game over (all questions completed successfully)
+
         if (game.gameOver) {
-          _playSound('game_complete.mp3');
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => GameCompleteScreen( // <--- CORRECTED TO GameCompleteScreen
-                playerName: game.playerName, // GameCompleteScreen needs playerName
-                score: game.score,           // GameCompleteScreen needs score
-                onPlayAgain: () {            // GameCompleteScreen needs onPlayAgain callback
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => GameScreen(playerName: game.playerName),
-                    ),
-                  );
-                },
+          await game.saveActivePlayerHighScore();
+          if (!mounted) return;
+
+          if (game.currentQuestion == null) {
+            _playSound('game_complete.mp3');
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => GameCompleteScreen(
+                  playerName: game.activePlayerProfile!.name,
+                  score: game.score,
+                  onPlayAgain: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GameScreen(playerName: game.activePlayerProfile!.name),
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            _playSound('incorrect_answer.mp3');
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => GameOverScreen(
+                  playerName: game.activePlayerProfile!.name,
+                  levelReached: game.currentLevel,
+                  score: game.score,
+                  highScore: game.activePlayerProfile!.highScore,
+                ),
+              ),
+            );
+          }
+        } else {
+          if (Game.isTimedModeEnabled) {
+            _startTimer();
+          }
         }
       }
     });
   }
 
   Future<void> _loadSoundSetting() async {
-    final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _isSoundMuted = prefs.getBool(Game.soundMutedKey) ?? false;
+      _isSoundMuted = Game.isSoundMuted;
     });
   }
 
-  Future<void> initializeGame() async {
+  Future<void> initializeGameSession() async {
     setState(() => isLoading = true);
-    game = Game();
-    await game.initializeGame(widget.playerName);
-    _selectedAnswerIndex = null;
-    _answerSubmitted = false;
+    List<PlayerProfile> allProfiles = await Game.loadAllPlayerProfiles();
+    PlayerProfile? selectedProfile;
+    if (allProfiles.isNotEmpty) {
+      selectedProfile = allProfiles.firstWhere((p) => p.name == widget.playerName);
+    }
+
+    if (selectedProfile != null) {
+      game = Game();
+      await game.initializeGame(selectedProfile);
+      _selectedAnswerIndex = null;
+      _answerSubmitted = false;
+    } else {
+      print("Error: Player profile not found for ${widget.playerName}. Creating new dummy profile.");
+      game = Game();
+      await game.initializeGame(PlayerProfile(name: widget.playerName, highScore: 0));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error loading profile. A new one was created.')),
+        );
+      }
+    }
     setState(() => isLoading = false);
   }
 
   @override
   void dispose() {
-    // _audioPlayer.dispose(); // Removed as _audioPlayer member is no longer used
     _animationController.dispose();
     _correctAnswerAnimationController.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
-  // --- START FIX 1: Dispose player after sound completion ---
   void _playSound(String soundFileName) {
     if (_isSoundMuted) {
       return;
     }
-    final player = AudioPlayer(); // Create a new instance for each sound
+    final player = AudioPlayer();
     player.play(AssetSource('sounds/$soundFileName'));
-
-    // Listen for completion and dispose the player
     player.onPlayerComplete.listen((event) {
       player.dispose();
     });
   }
-  // --- END FIX 1 ---
+
+  void _startTimer() {
+    _timer?.cancel();
+    _timeRemaining = _maxTime;
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      setState(() {
+        if (_timeRemaining > 0) {
+          _timeRemaining--;
+        } else {
+          timer.cancel();
+          _handleTimeout();
+        }
+      });
+    });
+  }
+
+  void _handleTimeout() {
+    if (!mounted) return;
+    _timer?.cancel();
+    _handleAnswer(-1);
+  }
 
   Color _getButtonColor(int optionIndex) {
     if (!_answerSubmitted) {
@@ -171,25 +267,21 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
   }
 
   void _handleAnswer(int answerIndex) async {
-    if (_answerSubmitted) return;
+    if (_answerSubmitted && answerIndex != -1) return;
+
+    _timer?.cancel();
 
     setState(() {
       _selectedAnswerIndex = answerIndex;
       _answerSubmitted = true;
     });
 
-    bool isCorrect = (game.currentQuestion!.correctAnswer == answerIndex);
-
-    if (isCorrect) {
-      _playSound('correct_answer.mp3');
-      setState(() {
-        _showCorrectAnimation = true;
-      });
-      _animationController.forward(from: 0.0);
-    } else {
+    bool isCorrect = false;
+    if (answerIndex == -1) {
+      isCorrect = false;
       _playSound('incorrect_answer.mp3');
-
-      await Future.delayed(const Duration(seconds: 5));
+      await game.saveActivePlayerHighScore();
+      await Future.delayed(const Duration(seconds: 3));
 
       if (!mounted) return;
 
@@ -197,13 +289,41 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
         context,
         MaterialPageRoute(
           builder: (context) => GameOverScreen(
-            playerName: game.playerName,
-            levelReached: game.currentLevel - 1,
+            playerName: game.activePlayerProfile!.name,
+            levelReached: game.currentLevel,
             score: game.score,
-            highScore: game.highScore,
+            highScore: game.activePlayerProfile!.highScore,
           ),
         ),
       );
+    } else {
+      isCorrect = (game.currentQuestion!.correctAnswer == answerIndex);
+
+      if (!isCorrect) {
+        _playSound('incorrect_answer.mp3');
+        await game.saveActivePlayerHighScore();
+        await Future.delayed(const Duration(seconds: 3));
+
+        if (!mounted) return;
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GameOverScreen(
+              playerName: game.activePlayerProfile!.name,
+              levelReached: game.currentLevel,
+              score: game.score,
+              highScore: game.activePlayerProfile!.highScore,
+            ),
+          ),
+        );
+      } else {
+        _playSound('correct_answer.mp3');
+        setState(() {
+          _showCorrectAnimation = true;
+        });
+        _animationController.forward(from: 0.0);
+      }
     }
   }
 
@@ -223,7 +343,7 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Level ${game.currentLevel}"),
+        title: Text("Level ${game.currentLevel} | Score: ${game.score}"),
         backgroundColor: Colors.deepPurpleAccent,
         elevation: 0,
         foregroundColor: Colors.white,
@@ -247,6 +367,28 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  if (Game.isTimedModeEnabled)
+                    Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: LinearProgressIndicator(
+                            value: _timeRemaining / _maxTime,
+                            backgroundColor: Colors.grey[300],
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              _timeRemaining > _maxTime / 3 ? Colors.greenAccent : Colors.redAccent,
+                            ),
+                            minHeight: 15,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          'Time Left: $_timeRemaining seconds',
+                          style: const TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                        const SizedBox(height: 15),
+                      ],
+                    ),
                   Text(game.currentQuestion!.question,
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
@@ -314,7 +456,6 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
                           game.use5050();
                           _playSound('50_50.mp3');
                           setState(() {});
-                          // No need to clear 50/50, as it modifies options permanently
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -329,20 +470,27 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
                       ElevatedButton(
                         onPressed: (game.askAudienceUsed || _answerSubmitted)
                             ? null
-                            : () {
-                          audienceVotes = game.askTheAudience();
-                          _playSound('ask_audience.mp3');
-                          setState(() {}); // Update UI to show votes
+                            : () async {
+                          final Map<int, int> newAudienceVotes = game.askTheAudience();
 
-                          // --- START FIX 2: Clear audience votes after a delay ---
-                          Future.delayed(const Duration(seconds: 7), () { // Adjust duration as needed
-                            if (mounted) { // Check if the widget is still active
-                              setState(() {
-                                audienceVotes = {}; // Clear votes
-                              });
-                            }
+                          _playSound('audience_murmur.mp3');
+
+                          await Future.delayed(const Duration(seconds: 3));
+
+                          if (!mounted) return;
+
+                          _playSound('audience_reveal.mp3');
+
+                          setState(() {
+                            audienceVotes = newAudienceVotes;
                           });
-                          // --- END FIX 2 ---
+
+                          await Future.delayed(const Duration(seconds: 7));
+                          if (mounted) {
+                            setState(() {
+                              audienceVotes = {};
+                            });
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -357,20 +505,27 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
                       ElevatedButton(
                         onPressed: (game.phoneAFriendUsed || _answerSubmitted)
                             ? null
-                            : () {
-                          friendHint = game.phoneAFriend();
-                          _playSound('phone_a_friend.mp3');
-                          setState(() {}); // Update UI to show hint
+                            : () async {
+                          final String newFriendHint = game.phoneAFriend();
 
-                          // --- START FIX 2: Clear friend hint after a delay ---
-                          Future.delayed(const Duration(seconds: 7), () { // Adjust duration as needed
-                            if (mounted) { // Check if the widget is still active
-                              setState(() {
-                                friendHint = ""; // Clear hint
-                              });
-                            }
+                          _playSound('phone_ring.mp3');
+
+                          await Future.delayed(const Duration(seconds: 3));
+
+                          if (!mounted) return;
+
+                          _playSound('phone_friend_speaks.mp3');
+
+                          setState(() {
+                            friendHint = newFriendHint;
                           });
-                          // --- END FIX 2 ---
+
+                          await Future.delayed(const Duration(seconds: 7));
+                          if (mounted) {
+                            setState(() {
+                              friendHint = "";
+                            });
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -420,6 +575,45 @@ class GameState extends State<GameScreen> with TickerProviderStateMixin {
                         Icons.check_circle,
                         color: Colors.greenAccent,
                         size: 150.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            if (_showHint && _currentHintText != null)
+              Positioned.fill(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Card(
+                      color: Colors.purple[100]?.withOpacity(0.95),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                      elevation: 8,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'Did You Know?',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.deepPurple,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 15),
+                            Text(
+                              _currentHintText!,
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.deepPurple[800],
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

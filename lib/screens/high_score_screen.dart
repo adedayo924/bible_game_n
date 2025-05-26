@@ -1,7 +1,6 @@
-// lib/high_score_screen.dart
+// lib/screens/high_score_screen.dart
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../models/game.dart'; // To use the _highScoreKey constant
+import '../models/game.dart'; // Import the Game class to access PlayerProfile and loadAllPlayerProfiles
 
 class HighScoreScreen extends StatefulWidget {
   const HighScoreScreen({super.key});
@@ -11,19 +10,25 @@ class HighScoreScreen extends StatefulWidget {
 }
 
 class _HighScoreScreenState extends State<HighScoreScreen> {
-  int _highScore = 0;
+  List<PlayerProfile> _playerProfiles = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadHighScore();
+    _loadLeaderboard();
   }
 
-  Future<void> _loadHighScore() async {
-    final prefs = await SharedPreferences.getInstance();
+  Future<void> _loadLeaderboard() async {
     setState(() {
-      // Use the same key as defined in your Game class
-      _highScore = prefs.getInt(Game.highScoreKey) ?? 0;
+      _isLoading = true;
+    });
+    // Load all player profiles
+    _playerProfiles = await Game.loadAllPlayerProfiles();
+    // Sort profiles by high score in descending order
+    _playerProfiles.sort((a, b) => b.highScore.compareTo(a.highScore));
+    setState(() {
+      _isLoading = false;
     });
   }
 
@@ -31,9 +36,9 @@ class _HighScoreScreenState extends State<HighScoreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('High Scores', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF4B0082), // Deep Indigo
-        iconTheme: const IconThemeData(color: Colors.white), // For back button color
+        title: const Text('Global Leaderboard'), // Changed title for clarity
+        backgroundColor: Colors.deepPurpleAccent,
+        foregroundColor: Colors.white,
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -46,47 +51,74 @@ class _HighScoreScreenState extends State<HighScoreScreen> {
             ],
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'All-Time High Score:',
-                style: TextStyle(fontSize: 30, color: Colors.white70),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                '$_highScore',
-                style: const TextStyle(
-                    fontSize: 60,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.amberAccent,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 10.0,
-                        color: Colors.black54,
-                        offset: Offset(3.0, 3.0),
-                      ),
-                    ]),
-              ),
-              const SizedBox(height: 50),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context); // Go back to the previous screen (Home)
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.deepPurple,
-                  backgroundColor: Colors.white,
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  textStyle: const TextStyle(fontSize: 20),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                ),
-                child: const Text("Back to Menu"),
-              ),
-            ],
+        child: _isLoading
+            ? const Center(child: CircularProgressIndicator(color: Colors.white))
+            : _playerProfiles.isEmpty
+            ? const Center(
+          child: Text(
+            'No scores yet. Start a game!',
+            style: TextStyle(fontSize: 18, color: Colors.white70),
           ),
+        )
+            : ListView.builder(
+          padding: const EdgeInsets.all(16.0),
+          itemCount: _playerProfiles.length,
+          itemBuilder: (context, index) {
+            final profile = _playerProfiles[index];
+            // Determine rank for styling
+            final int rank = index + 1;
+            Color rankColor = Colors.white;
+            if (rank == 1) {
+              rankColor = Colors.amberAccent; // Gold for 1st
+            } else if (rank == 2) {
+              rankColor = Colors.grey[400]!; // Silver for 2nd
+            } else if (rank == 3) {
+              rankColor = Colors.brown[300]!; // Bronze for 3rd
+            }
+
+            return Card(
+              margin: const EdgeInsets.symmetric(vertical: 8.0),
+              color: Colors.deepPurple[100], // Lighter purple card
+              elevation: 4,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 40,
+                      alignment: Alignment.center,
+                      child: Text(
+                        '#$rank',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: rankColor,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Text(
+                        profile.name,
+                        style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.deepPurple),
+                      ),
+                    ),
+                    Text(
+                      '${profile.highScore}',
+                      style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepPurple),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

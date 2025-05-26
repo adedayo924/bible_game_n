@@ -3,673 +3,785 @@
     "question": "Who was the first man created by God?",
     "options": ["Cain", "Abel", "Adam", "Seth"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "The husband of Eve"
   },
   {
     "question": "What was the name of the disciple who doubted Jesus' resurrection until he saw him?",
     "options": ["Peter", "Thomas", "James", "John"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He is often referred to as 'Doubting' this disciple"
   },
   {
     "question": "Who was the Roman Emperor during Jesus' ministry?",
     "options": ["Augustus", "Tiberius", "Claudius", "Nero"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He ruled from AD 14 to AD 37"
   },
   {
     "question": "Explain the concept of 'Justification by Faith' in Pauline theology.",
     "options": ["Being declared righteous before God through faith in Christ", "Earning salvation through good works", "Following the Law perfectly", "Being baptized"],
     "correctAnswer": 0,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "A key doctrine in the letters of Paul"
   },
   {
     "question": "Who was the father of John the Baptist?",
     "options": ["Zechariah", "Joseph", "Herod", "Caiaphas"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was a priest of the division of Abijah"
   },
   {
     "question": "What was the name of the short tax collector who climbed a tree to see Jesus?",
     "options": ["Matthew", "Zacchaeus", "Simon", "Bartholomew"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was from Jericho"
   },
   {
     "question": "Which book of the Bible is known for its emphasis on faith without works is dead?",
     "options": ["Romans", "James", "Galatians", "Ephesians"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "Written by the brother of Jesus"
   },
   {
     "question": "Who was the first Gentile convert to Christianity?",
     "options": ["Cornelius", "Lydia", "Timothy", "Titus"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "A Roman centurion mentioned in Acts 10"
   },
   {
     "question": "What was the name of the island where the Apostle John received the Revelation?",
     "options": ["Patmos", "Crete", "Cyprus", "Rhodes"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "A small Greek island in the Aegean Sea"
   },
   {
     "question": "Which Old Testament character is often seen as a foreshadowing of Christ's sacrifice?",
     "options": ["Isaac", "Joseph", "David", "Moses"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He carried the wood for his own sacrifice"
   },
   {
     "question": "What is the 'Great Commission'?",
     "options": ["Jesus' command to love one another", "The instruction to make disciples of all nations", "The call to worship in spirit and truth", "The prophecy of Jesus' return"],
     "correctAnswer": 1,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "Found in Matthew 28:19-20"
   },
   {
     "question": "What was the name of the mountain where Abraham was asked to sacrifice Isaac?",
     "options": ["Mount Sinai", "Mount Moriah", "Mount Carmel", "Mount Nebo"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "The same location where the Temple was later built"
   },
   {
     "question": "Who was the wife of Jacob who he loved the most?",
     "options": ["Leah", "Rachel", "Bilhah", "Zilpah"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "She was the younger sister of Leah"
   },
   {
     "question": "What was the name of the Egyptian official who bought Joseph as a slave?",
     "options": ["Pharaoh", "Potiphar", "Ahmose", "Ramses"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was the captain of the guard"
   },
   {
     "question": "Discuss the significance of the 'Resurrection' in Christian theology.",
     "options": ["The central event of Christian faith", "A symbol of hope and new life", "A historical event with profound implications", "All of the above"],
     "correctAnswer": 3,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It validates Jesus' claims and promises"
   },
   {
     "question": "What is 'Exegesis'?",
     "options": ["Drawing meaning out of the text", "Reading meaning into the text", "Ignoring the context of the text", "Rejecting the authority of the text"],
     "correctAnswer": 0,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "A critical interpretation of biblical texts"
   },
   {
     "question": "Explain the different views on 'The Trinity' in Christian theology.",
     "options": ["One God in three persons", "Three separate gods", "One God who manifests in different forms", "All of the above"],
     "correctAnswer": 0,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "A foundational doctrine of Christianity"
   },
   {
     "question": "What is the 'Great Tribulation'?",
     "options": ["A period of intense suffering before Christ's return", "A time of peace and prosperity", "A symbolic representation of spiritual warfare", "A historical event in the Old Testament"],
     "correctAnswer": 0,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "Described in the book of Revelation"
   },
   {
     "question": "What was the name of the high priest who presided over Jesus' trial?",
     "options": ["Annas", "Caiaphas", "Herod", "Pilate"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was the son-in-law of Annas"
   },
   {
     "question": "Which Old Testament prophet is known for his visions of the end times?",
     "options": ["Isaiah", "Jeremiah", "Daniel", "Ezekiel"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He interpreted dreams and had apocalyptic visions"
   },
   {
     "question": "What was the name of the king who ordered the slaughter of all male infants in Bethlehem?",
     "options": ["Herod the Great", "Herod Antipas", "Herod Agrippa", "Caesar Augustus"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He ruled Judea at the time of Jesus' birth"
   },
   {
     "question": "What is the 'Rapture'?",
     "options": ["The catching up of believers to meet Christ in the air", "A period of intense suffering before Christ's return", "A symbolic representation of spiritual warfare", "A historical event in the Old Testament"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "A belief held by many Christians regarding the end times"
   },
   {
     "question": "Who was the disciple known as 'the one whom Jesus loved'?",
     "options": ["Peter", "James", "John", "Andrew"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He wrote the Gospel of John and the Book of Revelation"
   },
   {
     "question": "What was the name of the pool in Jerusalem where Jesus healed a paralyzed man?",
     "options": ["Bethesda", "Siloam", "Gihon", "Hezekiah"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "It was known for its healing waters"
   },
   {
     "question": "Which book of the Bible is known for its emphasis on love?",
     "options": ["1 Corinthians", "Galatians", "Ephesians", "Philippians"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "It contains the famous 'Love Chapter' (1 Corinthians 13)"
   },
   {
     "question": "What was the name of the mountain where Jesus gave the Sermon on the Mount?",
     "options": ["Mount Sinai", "Mount of Beatitudes", "Mount Carmel", "Mount Tabor"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "It overlooks the Sea of Galilee"
   },
   {
     "question": "Discuss the significance of the 'Kingdom of God' in Jesus' teachings.",
     "options": ["A present reality and a future hope", "A political kingdom", "A purely spiritual reality", "All of the above"],
     "correctAnswer": 0,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "Central to Jesus' parables and teachings"
   },
   {
     "question": "What was the name of the Philistine woman who betrayed Samson?",
     "options": ["Delilah", "Ruth", "Esther", "Deborah"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "She cut his hair while he slept"
   },
   {
     "question": "Which book of the Bible contains the Ten Commandments?",
     "options": ["Genesis", "Exodus", "Leviticus", "Deuteronomy"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "Given to Moses on Mount Sinai"
   },
   {
     "question": "Who was the father of the twelve tribes of Israel?",
     "options": ["Abraham", "Isaac", "Jacob", "Joseph"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He had twelve sons who became the patriarchs of the tribes"
   },
   {
     "question": "What did God create on the first day?",
     "options": ["Land and Sea", "Sun, Moon, and Stars", "Light", "Animals"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He said, 'Let there be light'"
   },
   {
     "question": "What did God created on the 7th day?",
     "options": ["man", "light", "Animals", "Rested"],
     "correctAnswer": 3,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He sanctified it and made it holy"
   },
   {
     "question": "Which judge of Israel was known for his strength and his long hair?",
     "options": ["Gideon", "Samson", "Jephthah", "Ehud"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He killed a lion with his bare hands"
   },
   {
     "question": "What is the name of the prophet that anointed David?",
     "options": ["Elijah", "Samuel", "Elisah", "Nathan"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He also anointed Saul as the first"
   },
   {
     "question": "Who preached the first gospel message?",
     "options": ["Peter", "John", "James", "Paul"],
     "correctAnswer": 0,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He preached on the day of Pentecost"
   },
   {
     "question": "Who led the children of israel through the red sea?",
     "options":["Joshua", "Abraham", "Moses", "Noah"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He was called by God to lead the Israelites out of Egypt"
   },
   {
     "question": "Who got saved on the way to Damascus?",
     "options": ["Paul", "Ananias", "Judas", "Dorcas"],
     "correctAnswer": 0,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He was formerly known as Saul of Tarsus"
   },
   {
     "question": "which prophet prophesied the birth of JESUS?",
     "options": ["Elisha", "Elijah", "Isaiah", "Joel"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He foretold the virgin birth in Isaiah 7:14"
   },
   {
     "question": "How many souls did Peter won the day of Pentecost?",
     "options": ["2000", "3000", "120", "100"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He preached a powerful sermon that led to this number"
   },
   {
     "question": "What name did GOD introduced HIMSELF to Moses?",
     "options": ["I AM THAT I AM", "Ebenezer", "JEHOVAH JIREH", "Adonai"],
     "correctAnswer": 0,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "This name signifies God's eternal existence"
   },
   {
     "question": "who betrayed JESUS with a kiss?",
     "options": ["James", "Judas Iscariot", "Thomas", "John"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was one of the twelve disciples"
   },
   {
     "question": "How many sons did Jacob have?",
     "options": ["10", "12", "14", "16"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "They became the patriarchs of the twelve tribes"
   },
   {
     "question": "JESUS performed the first miracle where?",
     "options": ["Jordan", "Jericho", "Bethlehem", "Cana of Galilee"],
     "correctAnswer": 3,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He turned water into wine at a wedding"
   },
   {
     "question": "JESUS fed 5000 people with ___?",
     "options": ["5 loaves of bread and 5 fishes", "2 loaves of bread and 4 fishes", "2500 loaves of bread and 2500 fishes", " 5 loaves of bread and 2 fishes"],
     "correctAnswer": 3,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He performed this miracle"
   },
   {
     "question": "What is the name of the Apostle who replaced Judas Iscariot?",
     "options": ["Matthias", "Joseph", "Cephas", "Paul"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was chosen by the remaining apostles"
   },
   {
     "question": "In which garden did Adam and Eve live?",
     "options": ["Garden of Eden", "Garden of Gethsemane", "Hanging Gardens of Babylon", "Garden of Roses"],
     "correctAnswer": 0,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "It was the paradise where they first lived"
   },
   {
     "question": "Who were the parents of Cain and Abel?",
     "options": ["Abraham and Sarah", "Isaac and Rebekah", "Adam and Eve", "Jacob and Leah"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "The first humans created by God"
   },
   {
     "question": "What type of tree was forbidden in the Garden of Eden?",
     "options": ["Tree of Life", "Tree of Knowledge of Good and Evil", "Fig Tree", "Apple Tree"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "Eating from this tree led to the fall"
   },
   {
     "question": "What was the sign of God's covenant with Noah after the flood?",
     "options": ["Dove", "Rainbow", "Ark", "Olive Branch"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "It symbolizes God's promise never to flood the earth again"
   },
   {
     "question": "How many pairs of clean animals did Noah take into the ark?",
     "options": ["One pair", "Two pairs", "Seven pairs", "Ten pairs"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He took seven pairs of each clean animal"
   },
   {
     "question": "Who was the wife of Abraham?",
     "options": ["Rebekah", "Leah", "Sarah", "Rachel"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "She bore him a son when she was very old"
   },
   {
     "question": "What was the name of Abraham's son of promise?",
     "options": ["Ishmael", "Isaac", "Jacob", "Esau"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He was born when Abraham was 100 years old"
   },
   {
     "question": "What city was destroyed by fire and brimstone due to its wickedness?",
     "options": ["Jericho", "Babylon", "Sodom", "Gomorrah"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "Lot and his family were warned to flee from this city"
   },
   {
     "question": "Who wrestled with God and had his name changed to Israel?",
     "options": ["Isaac", "Jacob", "Joseph", "Judah"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He was the son of Isaac and Rebekah"
   },
   {
     "question": "How many plagues did God send upon Egypt?",
     "options": ["7", "10", "12", "5"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "These plagues were sent to convince Pharaoh to release the Israelites"
   },
   {
     "question": "What was the final plague that convinced Pharaoh to release the Israelites?",
     "options": ["Locusts", "Darkness", "Death of the Firstborn", "Boils"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "The Israelites marked their doors with lamb's blood to be spared"
   },
   {
     "question": "On what mountain did Moses receive the Ten Commandments?",
     "options": ["Mount Sinai", "Mount Ararat", "Mount Carmel", "Mount Zion"],
     "correctAnswer": 0,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "Also known as Mount Horeb, it is where Moses encountered the burning bush"
   },
   {
     "question": "What food did God provide for the Israelites in the wilderness?",
     "options": ["Quail and Fish", "Bread and Meat", "Manna and Quail", "Fruit and Nuts"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "Manna was described as bread from heaven"
   },
   {
     "question": "Who was Moses' brother who helped him speak to Pharaoh?",
     "options": ["Aaron", "Joshua", "Caleb", "Gershon"],
     "correctAnswer": 0,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He was the first high priest"
   },
   {
     "question": "Who succeeded Moses as leader of the Israelites?",
     "options": ["Aaron", "Caleb", "Joshua", "Samuel"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He led the Israelites into the Promised Land"
   },
   {
     "question": "Which city's walls fell down when the Israelites marched around it?",
     "options": ["Jerusalem", "Jericho", "Ai", "Gibeon"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "They marched around it for seven days"
   },
   {
     "question": "Who was the judge known for his great strength?",
     "options": ["Gideon", "Samson", "Deborah", "Jephthah"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He killed a lion with his bare hands and brought down the pillars of a Philistine temple"
   },
   {
     "question": "Who was the mother of Samuel?",
     "options": ["Sarah", "Rebekah", "Hannah", "Leah"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "She prayed for a child and dedicated him to the Lord"
   },
   {
     "question": "Who was the first king of Israel?",
     "options": ["David", "Solomon", "Saul", "Rehoboam"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He was anointed by the prophet Samuel"
   },
   {
     "question": "Who killed Goliath?",
     "options": ["Saul", "Jonathan", "David", "Samuel"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He was a young shepherd"
   },
   {
     "question": "Who was known as 'a man after God's own heart'?",
     "options": ["Saul", "David", "Solomon", "Abraham"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He wrote many of the Psalms"
   },
   {
     "question": "Who was the wisest king of Israel?",
     "options": ["David", "Solomon", "Asa", "Jehoshaphat"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He is known for building the first temple in Jerusalem"
   },
   {
     "question": "Which prophet confronted Ahab and Jezebel?",
     "options": ["Elijah", "Elisha", "Isaiah", "Jeremiah"],
     "correctAnswer": 0,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He challenged the prophets of Baal on Mount Carmel"
   },
   {
     "question": "How many books of Psalms are there?",
     "options": ["50", "100", "150", "200"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "They are a collection of songs and prayers attributed to various authors, primarily David"
   },
   {
     "question": "Which prophet was thrown into a lion's den?",
     "options": ["Daniel", "Isaiah", "Jeremiah", "Ezekiel"],
     "correctAnswer": 0,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He was known for his unwavering faith in God"
   },
   {
     "question": "Who is considered the last prophet of the Old Testament?",
     "options": ["Malachi", "Zechariah", "Haggai", "Zephaniah"],
     "correctAnswer": 0,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "His name means 'my messenger'"
   },
   {
     "question": "Who announced the birth of Jesus to Mary?",
     "options": ["John the Baptist", "Gabriel", "Michael", "Peter"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He is known as the archangel"
   },
   {
     "question": "In what city was Jesus born?",
     "options": ["Jerusalem", "Nazareth", "Bethlehem", "Capernaum"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "It is also known as the City of David"
   },
   {
     "question": "Who baptized Jesus in the Jordan River?",
     "options": ["Peter", "John the Baptist", "James", "Andrew"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He is known for his call to repentance"
   },
   {
     "question": "How many disciples did Jesus choose?",
     "options": ["8", "10", "12", "14"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "They were also known as the apostles"
   },
   {
     "question": "What is the 'Golden Rule'?",
     "options": ["Love your neighbor", "Do unto others as you would have them do unto you", "Believe in Jesus", "Follow the Ten Commandments"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "It is a principle of treating others as one wants to be treated"
   },
   {
     "question": "What is the name of the tax collector who followed Jesus?",
     "options": ["Peter", "John", "Matthew", "Thomas"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He is also the author of the first Gospel"
   },
   {
     "question": "Which disciple denied Jesus three times?",
     "options": ["Peter", "Judas", "John", "Thomas"],
     "correctAnswer": 0,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He later became a leader in the early church"
   },
   {
     "question": "Who was the Roman governor who sentenced Jesus to crucifixion?",
     "options": ["Herod", "Pilate", "Caesar", "Felix"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He famously washed his hands of the matter"
   },
   {
     "question": "Who was the first person to see Jesus after his resurrection (according to John's Gospel)?",
     "options": ["Peter", "Mary Magdalene", "John", "Thomas"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "She was the first to arrive at the empty tomb"
   },
   {
     "question": "What happened on the day of Pentecost?",
     "options": ["Jesus' Ascension", "The Last Supper", "The Holy Spirit came", "Jesus' Baptism"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "The apostles were filled with the Holy Spirit and spoke in tongues"
   },
   {
     "question": "Who was the first Christian martyr?",
     "options": ["Peter", "Stephen", "Paul", "James"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He was stoned to death for his faith"
   },
   {
     "question": "Which apostle wrote the most books in the New Testament?",
     "options": ["Peter", "John", "Paul", "James"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "He wrote 13 letters, including Romans and Corinthians"
   },
   {
     "question": "What is the shortest book in the New Testament?",
     "options": ["Jude", "2 John", "3 John", "Philemon"],
     "correctAnswer": 2,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "It has only one chapter with 14 verses"
   },
   {
     "question": "What is the last book of the Bible?",
     "options": ["Jude", "Revelation", "3 John", "Hebrews"],
     "correctAnswer": 1,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "It contains apocalyptic visions and prophecies"
   },
   {
     "question": "What was the name of Cain's wife (according to some traditions)?",
     "options": ["Awan", "Lilith", "Eve", "Adah"],
     "correctAnswer": 0,
-    "difficulty": 1
+    "difficulty": 1,
+    "hint": "Some Jewish traditions suggest she was his sister"
   },
   {
     "question": "How old was Noah when the flood began?",
     "options": ["400 years", "500 years", "600 years", "700 years"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was 600 years old when he entered the ark"
   },
   {
     "question": "What were the names of Isaac's twin sons?",
     "options": ["Cain and Abel", "Jacob and Esau", "Ephraim and Manasseh", "Reuben and Simeon"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "Jacob later received the blessing meant for Esau"
   },
   {
     "question": "What was the name of Joseph's Egyptian wife?",
     "options": ["Asenath", "Zuleikha", "Dinah", "Shiphrah"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "She was the daughter of Potiphera, priest of On"
   },
   {
     "question": "Which tribe of Israel was designated as priests?",
     "options": ["Judah", "Levi", "Benjamin", "Ephraim"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "They were responsible for the tabernacle and later the temple"
   },
   {
     "question": "What was the Ark of the Covenant made of?",
     "options": ["Gold and Silver", "Acacia Wood and Gold", "Cedar Wood and Bronze", "Olive Wood and Silver"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "It contained the tablets of the Ten Commandments"
   },
   {
     "question": "How long were the Israelites in the wilderness?",
     "options": ["20 years", "30 years", "40 years", "50 years"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "They wandered until the disbelieving generation died out"
   },
   {
     "question": "Who spied out the land of Canaan with Joshua?",
     "options": ["Aaron", "Caleb", "Gideon", "Barak"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was one of the two faithful spies who believed they could conquer the land"
   },
   {
     "question": "Who was the Moabitess who showed loyalty to her mother-in-law?",
     "options": ["Esther", "Ruth", "Naomi", "Deborah"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "She is known for her famous declaration, 'Where you go, I will go'"
   },
   {
     "question": "What was the name of David's best friend?",
     "options": ["Jonathan", "Absalom", "Joab", "Nathan"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was the son of King Saul"
   },
   {
     "question": "Who built the first temple in Jerusalem?",
     "options": ["David", "Solomon", "Hezekiah", "Josiah"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was known for his wisdom and wealth"
   },
   {
     "question": "Who was taken up to heaven in a chariot of fire?",
     "options": ["Elijah", "Elisha", "Moses", "Enoch"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was a prophet who performed many miracles"
   },
   {
     "question": "Which book of the Bible is a collection of love poems?",
     "options": ["Proverbs", "Ecclesiastes", "Song of Solomon", "Lamentations"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "It celebrates romantic love and desire"
   },
   {
     "question": "Which prophet spoke of the 'valley of dry bones'?",
     "options": ["Isaiah", "Jeremiah", "Ezekiel", "Daniel"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He had a vision of dry bones coming to life"
   },
   {
     "question": "How many books are in the Old Testament?",
     "options": ["37", "39", "41", "46"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "This count may vary slightly in different Christian traditions"
   },
   {
     "question": "What was the name of the angel who appeared to Zechariah?",
     "options": ["Gabriel", "Michael", "Raphael", "Uriel"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He announced the birth of John the Baptist"
   },
   {
     "question": "What gift did the wise men NOT bring to Jesus?",
     "options": ["Gold", "Frankincense", "Myrrh", "Diamonds"],
     "correctAnswer": 3,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "They brought gifts that were symbolic of His kingship, divinity, and suffering"
   },
   {
     "question": "What was Jesus' first miracle in Cana of Galilee?",
     "options": ["Healing a blind man", "Raising Lazarus", "Walking on water", "Turning water into wine"],
     "correctAnswer": 3,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "This miracle revealed His glory and His disciples believed in Him"
   },
   {
     "question": "In which city was Paul converted on the road to?",
     "options": ["Jerusalem", "Damascus", "Antioch", "Corinth"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was blinded by a light and heard the voice of Jesus"
   },
   {
     "question": "Who was Paul's missionary companion on his first journey?",
     "options": ["Silas", "Timothy", "Barnabas", "Luke"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "They traveled together to spread the Gospel"
   },
   {
     "question": "To which church did Paul write a letter about love in 1 Corinthians 13?",
     "options": ["Ephesus", "Philippi", "Corinth", "Thessalonica"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "This letter is often read at weddings for its beautiful description of love"
   },
   {
     "question": "Which fruit of the Spirit is listed first in Galatians 5:22-23?",
     "options": ["Love", "Joy", "Peace", "Patience"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "It is considered the greatest of all virtues"
   },
   {
     "question": "How many books are in the New Testament?",
     "options": ["25", "27", "29", "31"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "This includes the Gospels, letters, and Revelation"
   },
   {
     "question": "Who wrote the book of James?",
     "options": ["James the Great", "James the Less", "James, brother of Jesus", "James, son of Zebedee"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was a leader in the early church in Jerusalem"
   },
   {
     "question": "In Revelation, how many horsemen are mentioned?",
     "options": ["Two", "Four", "Six", "Eight"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "They are often referred to as the Four Horsemen of the Apocalypse"
   },
   {
     "question": "In Genesis, who was the first murderer mentioned in the Bible?",
     "options": ["Cain", "Lamech", "Esau", "Ham"],
     "correctAnswer": 0,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "He was one of the sons of the first man created by GOD"
   },
   {
     "question": "What is the meaning of 'El Shaddai'?",
     "options": ["God Almighty", "The Lord is my Shepherd", "The Lord our Righteousness", "The Lord will Provide"],
     "correctAnswer": 0,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "One of GOD's distinct names"
   },
   {
     "question": "According to tradition, who wrote the Pentateuch?",
@@ -687,156 +799,182 @@
     "question": "Which judge made a foolish vow that resulted in sacrificing his daughter?",
     "options": ["Gideon", "Jephthah", "Samson", "Barak"],
     "correctAnswer": 1,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "He vowed to sacrifice the first thing that came out of his house if he won a battle"
   },
   {
     "question": "What is the 'Day of Atonement' called in Hebrew?",
     "options": ["Passover", "Yom Kippur", "Rosh Hashanah", "Sukkot"],
     "correctAnswer": 1,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It is the holiest day in Judaism, focused on repentance and atonement"
   },
   {
     "question": "What is the literary genre of the Song of Solomon?",
     "options": ["Wisdom Literature", "Prophecy", "Poetry", "Narrative"],
     "correctAnswer": 2,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It is an allegorical love poem"
   },
   {
     "question": "Which prophetic book is structured as a series of 'burdens' or oracles against nations?",
     "options": ["Amos", "Nahum", "Habakkuk", "Zephaniah"],
     "correctAnswer": 1,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It prophesies the fall of Nineveh"
   },
   {
     "question": "In the book of Revelation, what is the number of the beast?",
     "options": ["616", "666", "777", "888"],
     "correctAnswer": 1,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It is associated with the end times and the Antichrist"
   },
   {
     "question": "What does 'Paraclete' mean?",
     "options": ["Savior", "Messiah", "Comforter/Advocate", "King of Kings"],
     "correctAnswer": 2,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It refers to the Holy Spirit in the New Testament"
   },
   {
     "question": "Which Pauline epistle is considered by many scholars to be a circular letter?",
     "options": ["Ephesians", "Colossians", "Philippians", "Philemon"],
     "correctAnswer": 0,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It was likely intended for multiple churches in Asia Minor"
   },
   {
     "question": "What is 'kenosis' in Philippians 2:7?",
     "options": ["Christ's humility", "Christ's divine nature", "Christ's death", "Christ's resurrection"],
     "correctAnswer": 0,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It refers to Christ emptying Himself of divine privileges"
   },
   {
     "question": "Which book of the Bible is most focused on practical wisdom for daily living?",
     "options": ["Proverbs", "Ecclesiastes", "Job", "Psalms"],
     "correctAnswer": 0,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It contains sayings and teachings on how to live a wise life"
   },
   {
     "question": "What is the 'already and not yet' concept related to in Christian eschatology?",
     "options": ["Salvation", "The Kingdom of God", "Justification", "Sanctification"],
     "correctAnswer": 1,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It refers to the present reality of God's kingdom and its future fulfillment"
   },
   {
     "question": "Who were Aquila and Priscilla?",
     "options": ["Jewish Rulers", "Tentmakers and Missionaries", "Roman Soldiers", "Greek Philosophers"],
     "correctAnswer": 1,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "They were early Christian missionaries who worked with Paul"
   },
   {
     "question": "In 1 Timothy, what qualifications are given for elders/overseers?",
     "options": ["Wealth and Status", "Biblical Knowledge and Teaching Ability", "Age and Experience", "Miraculous Gifts"],
     "correctAnswer": 1,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "They must be able to teach and manage their households well"
   },
   {
     "question": "What is the 'incarnation'?",
     "options": ["Jesus' resurrection", "God becoming human in Jesus", "The Trinity", "The Holy Spirit"],
     "correctAnswer": 1,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It refers to the belief that God took on human form in Jesus Christ"
   },
   {
     "question": "What is the 'Great Commission'?",
     "options": ["The Ten Commandments", "Sermon on the Mount", "Go and make disciples of all nations", "The Lord's Prayer"],
     "correctAnswer": 2,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It is Jesus' command to His disciples after His resurrection"
   },
   {
     "question": "In Hebrews, who is Melchizedek compared to?",
     "options": ["Abraham", "David", "Moses", "Jesus"],
     "correctAnswer": 3,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "He is described as a priest forever in the order of Melchizedek"
   },
   {
     "question": "What does 'Selah' likely mean in the Psalms?",
     "options": ["Praise", "Silence or pause", "Amen", "Hallelujah"],
     "correctAnswer": 1,
-    "difficulty": 3
+    "difficulty": 3,
+    "hint": "It is often used to indicate a pause for reflection or musical interlude"
   },
   {
     "question": "What was the name of the valley where giants lived in Canaan?",
     "options": ["Valley of Elah", "Valley of Jezreel", "Valley of Rephaim", "Valley of Sorek"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "It was known for its association with the Philistines and their giants"
   },
   {
     "question": "Which king of Judah was known for religious reform and rediscovering the Book of the Law?",
     "options": ["Hezekiah", "Josiah", "Manasseh", "Rehoboam"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He initiated significant reforms to restore true worship in Judah"
   },
   {
     "question": "What are the three wisdom books in the Old Testament?",
     "options": ["Psalms, Proverbs, Job", "Proverbs, Ecclesiastes, Song of Solomon", "Job, Psalms, Ecclesiastes", "Song of Solomon, Lamentations, Proverbs"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "These books focus on wisdom, life's meaning, and love"
   },
   {
     "question": "What is the meaning of 'Immanuel'?",
     "options": ["God is salvation", "God is with us", "The Lord is righteous", "The Lord provides"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "It is a name given to Jesus in the prophecy of Isaiah"
   },
   {
     "question": "In which Gospel does Jesus wash the disciples' feet?",
     "options": ["Matthew", "Mark", "Luke", "John"],
     "correctAnswer": 3,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "This act symbolizes humility and service"
   },
   {
     "question": "What is the 'armor of God' described in Ephesians 6?",
     "options": ["Spiritual defenses for Christians", "Physical armor for battle", "Ritual clothing for priests", "Metaphors for church leadership"],
     "correctAnswer": 0,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "It includes the belt of truth, breastplate of righteousness, and shield of faith"
   },
   {
     "question": "Who was the Roman centurion who declared Jesus 'Truly this man was the Son of God!'?",
     "options": ["Cornelius", "Longinus", "Julius", "Agrippa"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He was present at the crucifixion of Jesus"
   },
   {
     "question": "What was the name of the sorcerer who opposed Paul in Cyprus?",
     "options": ["Simon Magus", "Elymas/Bar-Jesus", "Apollos", "Demetrius"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He tried to turn the proconsul away from the faith"
   },
   {
     "question": "In 2 Timothy 4:7, Paul speaks of having fought a good...",
     "options": ["Race", "Game", "Fight", "War"],
     "correctAnswer": 2,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "He reflects on his life and ministry as he nears the end"
   },
   {
     "question": "What does the word 'Deuteronomy' mean?",
     "options": ["First Law", "Second Law", "Third Law", "New Law"],
     "correctAnswer": 1,
-    "difficulty": 2
+    "difficulty": 2,
+    "hint": "It is the fifth book of the Bible, containing a repetition of the Law given to Moses"
   }
 ]

@@ -1,11 +1,13 @@
 // lib/screens/player_name_input_screen.dart
 import 'package:flutter/material.dart';
-import 'game_screen.dart'; // Import GameScreen
-import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
-import '../models/game.dart'; // Import Game to access the key
+import 'package:shared_preferences/shared_preferences.dart';
+import '../models/game.dart';
 
 class PlayerNameInputScreen extends StatefulWidget {
-  const PlayerNameInputScreen({super.key});
+  final bool isCreatingNew; // <--- NEW: Flag to indicate if creating a new profile
+
+  // <--- MODIFIED Constructor: Accepts isCreatingNew
+  const PlayerNameInputScreen({super.key, this.isCreatingNew = false});
 
   @override
   State<PlayerNameInputScreen> createState() => _PlayerNameInputScreenState();
@@ -17,20 +19,21 @@ class _PlayerNameInputScreenState extends State<PlayerNameInputScreen> {
   @override
   void initState() {
     super.initState();
-    _loadLastPlayerName(); // <--- Load the last player name when the screen initializes
+    // Only load last player name if not creating a new profile
+    if (!widget.isCreatingNew) { // <--- MODIFIED: Only load if not specifically creating new
+      _loadLastPlayerName();
+    }
   }
 
-  // Method to load the last saved player name
   Future<void> _loadLastPlayerName() async {
     final prefs = await SharedPreferences.getInstance();
     final lastPlayerName = prefs.getString(Game.lastPlayerNameKey);
     if (lastPlayerName != null && lastPlayerName.isNotEmpty) {
-      _nameController.text = lastPlayerName; // Pre-fill the text field
+      _nameController.text = lastPlayerName;
     }
   }
 
-  // Method to save the current player name
-  Future<void> _savePlayerName(String name) async {
+  Future<void> _saveLastPlayerName(String name) async { // Renamed for clarity
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(Game.lastPlayerNameKey, name);
   }
@@ -45,9 +48,10 @@ class _PlayerNameInputScreenState extends State<PlayerNameInputScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Enter Your Name'),
+        // <--- MODIFIED AppBar title
+        title: Text(widget.isCreatingNew ? 'Create New Profile' : 'Enter Your Name'),
         backgroundColor: Colors.deepPurpleAccent,
-        foregroundColor: Colors.white, // Ensures title and back button are white
+        foregroundColor: Colors.white,
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -55,8 +59,8 @@ class _PlayerNameInputScreenState extends State<PlayerNameInputScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF4B0082), // Deep Indigo
-              Color(0xFF9370DB), // Medium Purple/Lavender
+              Color(0xFF4B0082),
+              Color(0xFF9370DB),
             ],
           ),
         ),
@@ -68,31 +72,42 @@ class _PlayerNameInputScreenState extends State<PlayerNameInputScreen> {
               TextField(
                 key: const ValueKey("playerNameTextField"),
                 controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Player Name',
-                  labelStyle: TextStyle(color: Colors.white70),
-                  enabledBorder: OutlineInputBorder(
+                decoration: InputDecoration(
+                  labelText: widget.isCreatingNew ? 'New Player Name' : 'Player Name', // <--- MODIFIED label
+                  labelStyle: const TextStyle(color: Colors.white70),
+                  enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white54),
                   ),
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
                 ),
-                style: const TextStyle(color: Colors.white), // Text color inside the input
+                style: const TextStyle(color: Colors.white),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () async { // Make onPressed async to await _savePlayerName
-                  final playerName = _nameController.text.trim(); // Trim whitespace
+                onPressed: () async {
+                  final playerName = _nameController.text.trim();
                   if (playerName.isNotEmpty) {
-                    await _savePlayerName(playerName); // <--- Save the name here
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            GameScreen(playerName: playerName),
-                      ),
-                    );
+                    await _saveLastPlayerName(playerName); // Still save for convenience
+                    if (widget.isCreatingNew) {
+                      // <--- MODIFIED: Pop with the name if creating new
+                      Navigator.pop(context, playerName);
+                    } else {
+                      // <--- This path is now deprecated as we go through ProfileSelectionScreen
+                      // But kept as a fallback if you still call it directly without isCreatingNew = true
+                      // You might consider removing this else block entirely later if always using ProfileSelectionScreen
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         GameScreen(playerName: playerName), // This needs to pass PlayerProfile now
+                      //   ),
+                      // );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Please select a profile from the main menu.')),
+                      );
+                    }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Please enter your name')),
@@ -109,7 +124,7 @@ class _PlayerNameInputScreenState extends State<PlayerNameInputScreen> {
                   ),
                   elevation: 5,
                 ),
-                child: const Text('Start Game'),
+                child: Text(widget.isCreatingNew ? 'Create Profile' : 'Start Game'), // <--- MODIFIED button text
               ),
             ],
           ),

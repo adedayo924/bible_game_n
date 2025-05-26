@@ -1,11 +1,12 @@
-// game_complete_screen.dart
+// lib/screens/game_complete_screen.dart
 import 'package:flutter/material.dart';
-// Ensure this import is still correct
+import 'home_screen.dart'; // To navigate back to home
+// import '../models/game.dart'; // Only needed if directly using Game.saveActivePlayerHighScore
 
 class GameCompleteScreen extends StatelessWidget {
   final String playerName;
   final int score;
-  final VoidCallback onPlayAgain; // This is now correctly stored
+  final VoidCallback onPlayAgain;
 
   const GameCompleteScreen({
     super.key,
@@ -18,9 +19,9 @@ class GameCompleteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Game Completed!"),
-        backgroundColor: Colors.deepPurpleAccent, // Keep app bar consistent
-        elevation: 0,
+        title: const Text('Game Complete!'),
+        backgroundColor: Colors.deepPurpleAccent,
+        foregroundColor: Colors.white,
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -28,53 +29,75 @@ class GameCompleteScreen extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF4B0082), // Deep Indigo
-              Color(0xFF9370DB), // Medium Purple/Lavender
+              Color(0xFF4B0082),
+              Color(0xFF9370DB),
             ],
           ),
         ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               const Text(
-                "Congratulations!",
+                'Congratulations!',
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 36,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                "You've completed all levels, $playerName!",
-                style: const TextStyle(
-                  fontSize: 24,
                   color: Colors.white,
                 ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
               Text(
-                "Final Score: $score",
+                '$playerName, you completed all levels!',
+                style: const TextStyle(fontSize: 22, color: Colors.white70),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Final Score: $score',
                 style: const TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amberAccent,
                 ),
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: onPlayAgain,
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.purple, // Text color
-                  backgroundColor: Colors.white, // Button background
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  foregroundColor: Colors.deepPurple,
+                  backgroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                   textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
+                  elevation: 5,
                 ),
-                child: const Text("Play Again"),
+                child: const Text('Play Again'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                        (Route<dynamic> route) => false, // Remove all routes below
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.deepPurple,
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  textStyle: const TextStyle(fontSize: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 5,
+                ),
+                child: const Text('Back to Home'),
               ),
             ],
           ),

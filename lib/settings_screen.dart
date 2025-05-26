@@ -1,7 +1,6 @@
-// lib/settings_screen.dart
+// lib/screens/settings_screen.dart
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'models/game.dart'; // To access Game.soundMutedKey
+import 'package:new_game/models/game.dart'; // Import Game class
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -11,36 +10,17 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _isSoundMuted = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadSoundSetting();
-  }
-
-  Future<void> _loadSoundSetting() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _isSoundMuted = prefs.getBool(Game.soundMutedKey) ?? false; // Default to not muted
-    });
-  }
-
-  Future<void> _saveSoundSetting(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(Game.soundMutedKey, value);
-    setState(() {
-      _isSoundMuted = value;
-    });
-  }
+  // Use the static variable from the Game class directly
+  bool _isSoundMuted = Game.isSoundMuted;
+  bool _isTimedModeEnabled = Game.isTimedModeEnabled; // <--- NEW: State for timed mode
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF4B0082), // Deep Indigo
-        iconTheme: const IconThemeData(color: Colors.white), // For back button color
+        title: const Text('Settings'),
+        backgroundColor: Colors.deepPurpleAccent,
+        foregroundColor: Colors.white,
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -48,32 +28,60 @@ class _SettingsScreenState extends State<SettingsScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF4B0082), // Deep Indigo
-              Color(0xFF9370DB), // Medium Purple/Lavender
+              Color(0xFF4B0082),
+              Color(0xFF9370DB),
             ],
           ),
         ),
-        child: Column(
+        child: ListView(
+          padding: const EdgeInsets.all(16.0),
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            Card(
+              color: Colors.deepPurple[100]?.withOpacity(0.9),
+              elevation: 4,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              margin: const EdgeInsets.only(bottom: 16),
               child: SwitchListTile(
                 title: const Text(
-                  'Mute Sound Effects',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  'Mute Sound',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.deepPurple),
                 ),
                 value: _isSoundMuted,
-                onChanged: (bool value) {
-                  _saveSoundSetting(value);
-                  // No need to explicitly reload GameScreen here,
-                  // as GameScreen will load the setting in its initState
-                  // or if you re-navigate to it.
+                onChanged: (bool value) async {
+                  setState(() {
+                    _isSoundMuted = value;
+                  });
+                  await Game.saveSoundSetting(value); // Save setting via Game class
                 },
-                activeColor: Colors.amber,
-                tileColor: Colors.white.withOpacity(0.1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                activeColor: Colors.deepPurpleAccent,
+                inactiveTrackColor: Colors.deepPurple[200],
+                secondary: const Icon(Icons.volume_up, color: Colors.deepPurple),
               ),
             ),
+            // --- NEW: Timed Mode Setting ---
+            Card(
+              color: Colors.deepPurple[100]?.withOpacity(0.9),
+              elevation: 4,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              margin: const EdgeInsets.only(bottom: 16),
+              child: SwitchListTile(
+                title: const Text(
+                  'Enable Timed Mode',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.deepPurple),
+                ),
+                value: _isTimedModeEnabled,
+                onChanged: (bool value) async {
+                  setState(() {
+                    _isTimedModeEnabled = value;
+                  });
+                  await Game.saveTimedModeSetting(value); // Save setting via Game class
+                },
+                activeColor: Colors.deepPurpleAccent,
+                inactiveTrackColor: Colors.deepPurple[200],
+                secondary: const Icon(Icons.timer, color: Colors.deepPurple),
+              ),
+            ),
+            // --- END NEW ---
           ],
         ),
       ),
